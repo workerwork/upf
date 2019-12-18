@@ -7,7 +7,7 @@ import (
 	"os"
 	"strconv"
 
-	"N4test/conf"
+	"github.com/workerwork/upf/conf"
 )
 
 func checkError(err error) {

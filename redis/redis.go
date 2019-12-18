@@ -1,8 +1,8 @@
 package redis
 
 import (
-	"N4test/conf"
 	"github.com/gomodule/redigo/redis"
+	"github.com/workerwork/upf/conf"
 	"strconv"
 	"time"
 )

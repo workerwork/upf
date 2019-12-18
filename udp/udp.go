@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	"N4test/conf"
 	"github.com/rs/zerolog/log"
+	"github.com/workerwork/upf/conf"
 )
 
 func Setup() {

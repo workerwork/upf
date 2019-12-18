@@ -51,7 +51,7 @@ var LoggerConf = &logger{}
 func Setup() {
 	viper.SetConfigType("YAML")
 	// 读取配置文件内容
-	data, err := ioutil.ReadFile("../config/config.yaml")
+	data, err := ioutil.ReadFile("config/config.yaml")
 	if err != nil {
 		log.Fatalf("Read 'config.yaml' fail: %v\n", err)
 	}
