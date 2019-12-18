@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"github.com/workerwork/upf/core/msg"
 	"github.com/workerwork/upf/core/node"
-	"bytes"
 	"log"
 )
 
