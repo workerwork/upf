@@ -17,7 +17,7 @@ type NodeID struct {
 
 func NewIPv4NodeID(ipv4 []byte) *NodeID {
 	return &NodeID{
-		EType:   IETYPE_NODE_ID,
+		EType:   IETypeNodeID,
 		ELength: uint16(4),
 		NodeID:  ipv4,
 	}
@@ -25,7 +25,7 @@ func NewIPv4NodeID(ipv4 []byte) *NodeID {
 
 func DecodeNodeID(data []byte, len uint16) *NodeID {
 	return &NodeID{
-		EType:      IETYPE_NODE_ID,
+		EType:      IETypeNodeID,
 		ELength:    len,
 		NodeIDType: NodeIDType(getValue(data, 1)[0]),
 		NodeID:     getValue(data, len-1),

@@ -8,7 +8,7 @@ type RecoveryTimeStamp struct {
 
 func NewRecoveryTimeStamp(rts []byte) *RecoveryTimeStamp {
 	return &RecoveryTimeStamp{
-		EType:             IETYPE_RECOVERY_TIME_STAMP,
+		EType:             IETypeRecoveryTimeStamp,
 		ELength:           uint16(4),
 		RecoveryTimeStamp: rts,
 	}
@@ -16,7 +16,7 @@ func NewRecoveryTimeStamp(rts []byte) *RecoveryTimeStamp {
 
 func DecodeRecoveryTimeStamp(data []byte, len uint16) *RecoveryTimeStamp {
 	return &RecoveryTimeStamp{
-		EType:             IETYPE_RECOVERY_TIME_STAMP,
+		EType:             IETypeRecoveryTimeStamp,
 		ELength:           len,
 		RecoveryTimeStamp: getValue(data, len),
 	}

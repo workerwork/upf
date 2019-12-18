@@ -29,7 +29,7 @@ type Cause struct {
 
 func NewCause(cause CauseType) *Cause {
 	return &Cause{
-		EType:   IETYPE_CAUSE,
+		EType:   IETypeCause,
 		ELength: uint16(1),
 		Cause:   cause,
 	}
@@ -37,7 +37,7 @@ func NewCause(cause CauseType) *Cause {
 
 func DecodeCause(data []byte, len uint16) *Cause {
 	return &Cause{
-		EType:   IETYPE_CAUSE,
+		EType:   IETypeCause,
 		ELength: len,
 		Cause:   CauseType(getValue(data, len-1)[0]),
 	}

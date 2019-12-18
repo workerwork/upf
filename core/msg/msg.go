@@ -84,17 +84,17 @@ func Parse(buf *bytes.Buffer) *Msg {
 			log.Println("err") //TODO::
 		}
 		switch eType {
-		case elem.IETYPE_NODE_ID:
+		case elem.IETypeNodeID:
 			m.NodeID = *elem.DecodeNodeID(eValue, eLen)
-		case elem.IETYPE_RECOVERY_TIME_STAMP:
+		case elem.IETypeRecoveryTimeStamp:
 			m.RecoveryTimeStamp = *elem.DecodeRecoveryTimeStamp(eValue, eLen)
 
-		case elem.IETYPE_UP_Function_Features:
+		case elem.IETypeUPFunctionFeatures:
 			//TODO::
 
-		case elem.IETYPE_CP_Function_Features:
+		case elem.IETypeCPFunctionFeatures:
 			//TODO::
-		case elem.IETYPE_USER_PLANE_IP_RESOURCE_INFORMATION:
+		case elem.IETypeUserPlaneIPResourceInformation:
 			//TODO::
 
 		default:
