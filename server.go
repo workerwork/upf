@@ -1,10 +1,10 @@
 package main
 
 import (
-	"N4test/conf"
-	"N4test/logger"
-	"N4test/redis"
-	"N4test/udp"
+	"github.com/workerwork/upf/conf"
+	"github.com/workerwork/upf/logger"
+	"github.com/workerwork/upf/redis"
+	"github.com/workerwork/upf/udp"
 )
 
 func main() {
