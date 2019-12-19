@@ -1,9 +1,9 @@
 package msg
 
 import (
-	"github.com/workerwork/upf/core/elem"
 	"bytes"
 	"encoding/binary"
+	"github.com/workerwork/upf/core/elem"
 	"log"
 )
 

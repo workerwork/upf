@@ -1,12 +1,5 @@
 package session
 
-import (
-	"N4test/core/elem"
-	"bytes"
-	"encoding/binary"
-	"log"
-)
-
 type SessionInfo struct {
 	NodeInfo   node.NodeInfo
 	LocalSEID  []byte

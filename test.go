@@ -2,16 +2,15 @@ package main
 
 import (
 	"bytes"
-	"github.com/workerwork/upf/core/msg"
-	"github.com/workerwork/upf/core/node"
-	"log"
+	"github.com/workerwork/upf/core"
 )
 
 func main() {
 	buf := bytes.NewBuffer([]byte{0x20, 0x05, 0x00, 0x15, 0x00, 0x00, 0x01, 0x00, 0x00, 0x3c, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x00, 0x04, 0xce, 0x0b, 0xd6, 0x5d})
-	cn := node.NewCacheNode()
-	tmp := msg.Parse(buf)
-	log.Println(tmp)
+	//cn := node.NewCacheNode()
+	//tmp := msg.Parse(buf)
+	//log.Println(tmp)
 	//log.Println(cn.Run(tmp))
-	log.Println(cn.Run(tmp).Pack().Bytes())
+	//log.Println(cn.Run(tmp).Pack().Bytes())
+	core.Run(buf)
 }

@@ -4,9 +4,9 @@ import (
 	"github.com/workerwork/upf/core/elem"
 )
 
-type CacheNode map[string]ElemInfo
+type CacheNode map[string]Elements
 
-func (cn CacheNode) Insert(elemInfo ElemInfo) error {
+func (cn CacheNode) Insert(elemInfo Elements) error {
 	cn[Bytes2Str(elemInfo.RemoteNodeID.NodeID)] = elemInfo
 	return nil
 }
