@@ -1,11 +1,17 @@
 package elem
 
+import (
+	"bytes"
+	"encoding/binary"
+	"log"
+)
+
 type NodeIDType byte
 
 const (
-	IPv4Addr NodeIDType = 0
-	IPv6Addr NodeIDType = 1
-	FQDN     NodeIDType = 2
+	NodeIDTypeIPv4Addr NodeIDType = 0
+	NodeIDTypeIPv6Addr NodeIDType = 1
+	NodeIDTypeFQDN     NodeIDType = 2
 )
 
 type NodeID struct {
@@ -19,6 +25,7 @@ func NewIPv4NodeID(ipv4 []byte) *NodeID {
 	return &NodeID{
 		EType:   IETypeNodeID,
 		ELength: uint16(4),
+		NodeIDType: NodeIDTypeIPv4Addr,
 		NodeID:  ipv4,
 	}
 }
@@ -33,7 +40,20 @@ func DecodeNodeID(data []byte, len uint16) *NodeID {
 }
 
 func EncodeNodeID(nodeID NodeID) []byte {
-	return setBuffer(nodeID.EType, nodeID.ELength, setValue(byte(nodeID.NodeIDType), nodeID.NodeID))
+	buf := bytes.NewBuffer([]byte{})
+	if err := binary.Write(buf, binary.BigEndian, nodeID.EType);err != nil {
+		log.Println("err")	//TODO::
+	}
+	if err := binary.Write(buf, binary.BigEndian, nodeID.ELength);err != nil {
+		log.Println("err")	//TODO::
+	}
+	if err := binary.Write(buf, binary.BigEndian, nodeID.NodeIDType);err != nil {
+		log.Println("err")	//TODO::
+	}
+	if err := binary.Write(buf, binary.BigEndian, nodeID.NodeID);err != nil {
+		log.Println("err")	//TODO::
+	}
+	return buf.Bytes()
 }
 
 //判断是否含有NodeID
