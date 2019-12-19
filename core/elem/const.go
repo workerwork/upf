@@ -3,6 +3,26 @@ package elem
 type IEType uint16
 
 const (
+	//Grouped IE, extendable
+	IETypeCreatePDR                  IEType = 1
+	TETypePDI                        IEType = 2
+	IETypeCreateFAR                  IEType = 3
+	IETypeForwardingParameters       IEType = 4
+	IETypeDuplicatingParameters      IEType = 5
+	IETypeCreateURR                  IEType = 6
+	IETypeCreateQER                  IEType = 7
+	IETypeCreatedPDR                 IEType = 8
+	IETypeUpdatePDR                  IEType = 9
+	IETypeUpdateFAR                  IEType = 10
+	IETypeUpdateForwardingParameters IEType = 11
+	IETypeUpdateBAR                  IEType = 12 //PFCP Session Report Response
+	IETypeUpdateURR                  IEType = 13
+	IETypeUpdateQER                  IEType = 14
+	IETypeRemovePDR                  IEType = 15
+	IETypeRemoveFAR                  IEType = 16
+	IETypeRemoveURR                  IEType = 17
+	IETypeRemoveQER                  IEType = 18
+	//
 	IETypeCause                                           IEType = 19 //decimal
 	IETypeSourceInterface                                 IEType = 20
 	IETypeFTEID                                           IEType = 21
@@ -38,7 +58,7 @@ const (
 	IETypeSequenceNumber                                  IEType = 52
 	IETypeMetric                                          IEType = 53
 	IETypeTimer                                           IEType = 55
-	IETypePacketDetectionRuleID                           IEType = 56 //PDR
+	IETypePDRID                                           IEType = 56 //PacketDetectionRuleID
 	IETypeFSEID                                           IEType = 57
 	IETypeNodeID                                          IEType = 60
 	IETypePFDContents                                     IEType = 61
