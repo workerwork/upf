@@ -1,11 +1,5 @@
 package elem
 
-import (
-	"bytes"
-	"encoding/binary"
-	"log"
-)
-
 type NodeIDType byte
 
 const (
@@ -23,10 +17,10 @@ type NodeID struct {
 
 func NewIPv4NodeID(ipv4 []byte) *NodeID {
 	return &NodeID{
-		EType:   IETypeNodeID,
-		ELength: uint16(4),
+		EType:      IETypeNodeID,
+		ELength:    uint16(4),
 		NodeIDType: NodeIDTypeIPv4Addr,
-		NodeID:  ipv4,
+		NodeID:     ipv4,
 	}
 }
 
@@ -40,20 +34,7 @@ func DecodeNodeID(data []byte, len uint16) *NodeID {
 }
 
 func EncodeNodeID(nodeID NodeID) []byte {
-	buf := bytes.NewBuffer([]byte{})
-	if err := binary.Write(buf, binary.BigEndian, nodeID.EType);err != nil {
-		log.Println("err")	//TODO::
-	}
-	if err := binary.Write(buf, binary.BigEndian, nodeID.ELength);err != nil {
-		log.Println("err")	//TODO::
-	}
-	if err := binary.Write(buf, binary.BigEndian, nodeID.NodeIDType);err != nil {
-		log.Println("err")	//TODO::
-	}
-	if err := binary.Write(buf, binary.BigEndian, nodeID.NodeID);err != nil {
-		log.Println("err")	//TODO::
-	}
-	return buf.Bytes()
+	return setValue(nodeID.EType, nodeID.ELength, nodeID.NodeIDType, nodeID.NodeID)
 }
 
 //判断是否含有NodeID

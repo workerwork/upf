@@ -44,5 +44,5 @@ func DecodeCause(data []byte, len uint16) *Cause {
 }
 
 func EncodeCause(cause Cause) []byte {
-	return setBuffer(cause.EType, cause.ELength, []byte{byte(cause.Cause)})
+	return setValue(cause.EType, cause.ELength, cause.Cause)
 }

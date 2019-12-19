@@ -23,7 +23,7 @@ func DecodeRecoveryTimeStamp(data []byte, len uint16) *RecoveryTimeStamp {
 }
 
 func EncodeRecoveryTimeStamp(rts RecoveryTimeStamp) []byte {
-	return setBuffer(rts.EType, rts.ELength, rts.RecoveryTimeStamp)
+	return setValue(rts.EType, rts.ELength, rts.RecoveryTimeStamp)
 }
 
 //判断是否含有RecoveryTimeStamp

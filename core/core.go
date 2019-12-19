@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-func Run(buf *bytes.Buffer){
+func Run(buf *bytes.Buffer) {
 	m := msg.Parse(buf)
 	log.Println(m)
 	switch m.Type {

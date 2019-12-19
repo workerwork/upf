@@ -32,4 +32,3 @@ const (
 	PFCPMsgTypeSessionReportRequest         PFCPMsgType = 56
 	PFCPMsgTypeSessionReportResponse        PFCPMsgType = 57
 )
-

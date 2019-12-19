@@ -10,8 +10,8 @@ type Session struct {
 }
 
 type Elements struct {
-	LocalNodeID               elem.NodeID
-	RemoteNodeID              elem.NodeID
+	LocalNodeID             elem.NodeID
+	RemoteNodeID            elem.NodeID
 	LocalRecoveryTimeStamp  elem.RecoveryTimeStamp
 	RemoteRecoveryTimeStamp elem.RecoveryTimeStamp
 }

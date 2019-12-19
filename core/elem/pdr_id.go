@@ -23,7 +23,7 @@ func DecodePDRID(data []byte, len uint16) *PDRID {
 }
 
 func EncodePDRID(pdrID PDRID) []byte {
-	return setBuffer(pdrID.EType, pdrID.ELength, pdrID.RuleID)
+	return setValue(pdrID.EType, pdrID.ELength, pdrID.RuleID)
 }
 
 //判断是否含有PDRID

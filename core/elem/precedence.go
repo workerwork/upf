@@ -23,7 +23,7 @@ func DecodePrecedence(data []byte, len uint16) *Precedence {
 }
 
 func EncodePrecedence(p Precedence) []byte {
-	return setBuffer(p.EType, p.ELength, p.Precedence)
+	return setValue(p.EType, p.ELength, p.Precedence)
 }
 
 //判断是否含有Precedence

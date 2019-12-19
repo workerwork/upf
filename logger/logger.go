@@ -4,9 +4,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/workerwork/upf/conf"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/workerwork/upf/conf"
 )
 
 // Setup 日志初始化设置
