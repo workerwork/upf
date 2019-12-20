@@ -1,17 +1,17 @@
 package elem
 
-type IPType byte
+type FSEIDFlag byte
 
 const (
-	IPTypeIPv6  IPType = 1
-	IPTypeIPv4  IPType = 2
-	IPTypeIPv46 IPType = 3
+	FSEIDFlagIPv6  FSEIDFlag = 1	//bits:0000 0001
+	FSEIDFlagIPv4  FSEIDFlag = 2	//bits:0000 0010
+	FSEIDFlagIPv46 FSEIDFlag = 3	//bits:0000 0011
 )
 
 type FSEID struct {
 	EType    IEType
 	ELength  uint16
-	IPType   IPType
+	Flag   FSEIDFlag
 	SEID     []byte
 	IPv4Addr []byte
 	IPv6Addr []byte
@@ -21,7 +21,7 @@ func NewIPv4FSEID(seid []byte, ipv4 []byte) *FSEID {
 	return &FSEID{
 		EType:    IETypeFSEID,
 		ELength:  uint16(13),
-		IPType:   IPTypeIPv4,
+		Flag:   FSEIDFlagIPv4,
 		SEID:     seid,
 		IPv4Addr: ipv4,
 	}
@@ -31,14 +31,14 @@ func DecodeFSEID(data []byte, len uint16) *FSEID {
 	var fseid FSEID
 	fseid.EType = IETypeFSEID
 	fseid.ELength = len
-	fseid.IPType = IPType(getValue(data, 1)[0])
+	fseid.Flag = FSEIDFlag(getValue(data, 1)[0])
 	fseid.SEID = getValue(data, 8)
-	switch fseid.IPType {
-	case IPTypeIPv4:
+	switch fseid.Flag {
+	case FSEIDFlagIPv4:
 		fseid.IPv4Addr = getValue(data, 4)
-	case IPTypeIPv6:
+	case FSEIDFlagIPv6:
 		fseid.IPv6Addr = getValue(data, 16)
-	case IPTypeIPv46:
+	case FSEIDFlagIPv46:
 		fseid.IPv4Addr = getValue(data, 4)
 		fseid.IPv6Addr = getValue(data, 16)
 	}
@@ -46,7 +46,7 @@ func DecodeFSEID(data []byte, len uint16) *FSEID {
 }
 
 func EncodeFSEID(fseid FSEID) []byte {
-	return setValue(fseid.EType, fseid.ELength, fseid.IPType, fseid.SEID, fseid.IPv4Addr, fseid.IPv6Addr)
+	return setValue(fseid.EType, fseid.ELength, fseid.Flag, fseid.SEID, fseid.IPv4Addr, fseid.IPv6Addr)
 }
 
 //判断是否含有FSEID
