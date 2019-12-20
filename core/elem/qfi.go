@@ -1,27 +1,26 @@
 package elem
 
-
 type QFI struct {
-	EType     IEType
-	ELength   uint16
-	QFI []byte
+	EType   IEType
+	ELength uint16
+	QFI     byte
 }
 
 func DecodeQFI(data []byte, len uint16) *QFI {
 	return &QFI{
-		EType: IETypeQFI,
+		EType:   IETypeQFI,
 		ELength: len,
-		QFI: getValue(data,len),
+		QFI:     getValue(data, len)[0],
 	}
 }
 
-func EncodeQFI(qfi QFI) []byte {
-	return setValue(qfi.EType, qfi.ELength, qfi.QFI)
+func EncodeQFI(q QFI) []byte {
+	return setValue(q.EType, q.ELength, q.QFI)
 }
 
 //判断是否含有SourceInterface
-func HasQFI(qfi QFI) bool {
-	if qfi.EType == 0 {
+func HasQFI(q QFI) bool {
+	if q.EType == 0 {
 		return false
 	}
 	return true

@@ -7,7 +7,7 @@ import (
 )
 
 type PDI struct {
-	EType IEType
+	EType   IEType
 	ELength uint16
 	SourceInterface
 	FTEID
@@ -16,9 +16,10 @@ type PDI struct {
 }
 
 func DecodePDI(data []byte, len uint16) *PDI {
-	var pdi PDI
-	pdi.EType = IETypePDI
-	pdi.ELength = len
+	pdi := PDI{
+		EType:   IETypePDI,
+		ELength: len,
+	}
 	var cursor uint16
 	buf := bytes.NewBuffer(data)
 	for cursor < pdi.ELength {
@@ -42,11 +43,11 @@ func DecodePDI(data []byte, len uint16) *PDI {
 		case IETypeFTEID:
 			pdi.FTEID = *DecodeFTEID(eValue, eLen)
 		case IETypeNetworkInstance:
-			pdi.NetworkInstance = *DecodeNetworkInstance(eValue,eLen)
+			pdi.NetworkInstance = *DecodeNetworkInstance(eValue, eLen)
 		case IETypeQFI:
-			pdi.QFI = *DecodeQFI(eValue,eLen)
+			pdi.QFI = *DecodeQFI(eValue, eLen)
 		default:
-			log.Println("err: unknown tlv type", eType)	//TODO::
+			log.Println("err: unknown tlv type", eType) //TODO::
 		}
 		cursor = cursor + eLen + 4
 	}
@@ -56,16 +57,16 @@ func DecodePDI(data []byte, len uint16) *PDI {
 func EncodePDI(pdi PDI) []byte {
 	ret := setValue(pdi.EType, pdi.ELength)
 	if HasSourceInterface(pdi.SourceInterface) {
-		ret = setValue(ret,pdi.SourceInterface)
+		ret = setValue(ret, pdi.SourceInterface)
 	}
 	if HasFTEID(pdi.FTEID) {
-		ret = setValue(ret,pdi.FTEID)
+		ret = setValue(ret, pdi.FTEID)
 	}
 	if HasNetworkInstance(pdi.NetworkInstance) {
-		ret = setValue(ret,pdi.NetworkInstance)
+		ret = setValue(ret, pdi.NetworkInstance)
 	}
 	if HasQFI(pdi.QFI) {
-		ret = setValue(ret,pdi.QFI)
+		ret = setValue(ret, pdi.QFI)
 	}
 	return ret
 }

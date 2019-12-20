@@ -3,14 +3,14 @@ package elem
 type RecoveryTimeStamp struct {
 	EType             IEType
 	ELength           uint16
-	RecoveryTimeStamp []byte
+	RecoveryTimeStamp []byte //4byte
 }
 
-func NewRecoveryTimeStamp(rts []byte) *RecoveryTimeStamp {
+func NewRecoveryTimeStamp(r []byte) *RecoveryTimeStamp {
 	return &RecoveryTimeStamp{
 		EType:             IETypeRecoveryTimeStamp,
 		ELength:           uint16(4),
-		RecoveryTimeStamp: rts,
+		RecoveryTimeStamp: r,
 	}
 }
 
@@ -22,13 +22,13 @@ func DecodeRecoveryTimeStamp(data []byte, len uint16) *RecoveryTimeStamp {
 	}
 }
 
-func EncodeRecoveryTimeStamp(rts RecoveryTimeStamp) []byte {
-	return setValue(rts.EType, rts.ELength, rts.RecoveryTimeStamp)
+func EncodeRecoveryTimeStamp(r RecoveryTimeStamp) []byte {
+	return setValue(r.EType, r.ELength, r.RecoveryTimeStamp)
 }
 
 //判断是否含有RecoveryTimeStamp
-func HasRecoveryTimeStamp(rts RecoveryTimeStamp) bool {
-	if rts.EType == 0 {
+func HasRecoveryTimeStamp(r RecoveryTimeStamp) bool {
+	if r.EType == 0 {
 		return false
 	}
 	return true

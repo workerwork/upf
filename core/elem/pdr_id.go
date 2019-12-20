@@ -3,14 +3,14 @@ package elem
 type PDRID struct {
 	EType   IEType
 	ELength uint16
-	RuleID  []byte
+	RuleID  []byte //2byte
 }
 
-func NewPDRID(ruleID []byte) *PDRID {
+func NewPDRID(r []byte) *PDRID {
 	return &PDRID{
 		EType:   IETypePDRID,
 		ELength: uint16(2),
-		RuleID:  ruleID,
+		RuleID:  r,
 	}
 }
 
@@ -18,17 +18,17 @@ func DecodePDRID(data []byte, len uint16) *PDRID {
 	return &PDRID{
 		EType:   IETypePDRID,
 		ELength: len,
-		RuleID:  getValue(data, len),
+		RuleID:  getValue(data, 2),
 	}
 }
 
-func EncodePDRID(pdrID PDRID) []byte {
-	return setValue(pdrID.EType, pdrID.ELength, pdrID.RuleID)
+func EncodePDRID(p PDRID) []byte {
+	return setValue(p.EType, p.ELength, p.RuleID)
 }
 
 //判断是否含有PDRID
-func HasPDRID(pdrID PDRID) bool {
-	if pdrID.EType == 0 {
+func HasPDRID(p PDRID) bool {
+	if p.EType == 0 {
 		return false
 	}
 	return true

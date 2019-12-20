@@ -26,9 +26,9 @@ type SourceInterface struct {
 
 func DecodeSourceInterface(data []byte, len uint16) *SourceInterface {
 	return &SourceInterface{
-		EType: IETypeSourceInterface,
-		ELength: len,
-		Interface: InterfaceType(getValue(data,len)[0]),
+		EType:     IETypeSourceInterface,
+		ELength:   len,
+		Interface: InterfaceType(getValue(data, len)[0]),
 	}
 }
 

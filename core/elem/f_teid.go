@@ -17,45 +17,42 @@ type FTEID struct {
 	EType    IEType
 	ELength  uint16
 	Flag     FTEIDFlag
-	TEID     []byte
-	IPv4Addr []byte
-	IPv6Addr []byte
-	ChooseID []byte
-}
-
-func NewIPv4TEID(teid []byte, ipv4 []byte) *FTEID {
-	return &FTEID{}
+	TEID     []byte //4byte
+	IPv4Addr []byte //4byte
+	IPv6Addr []byte //16byte
+	ChooseID byte
 }
 
 func DecodeFTEID(data []byte, len uint16) *FTEID {
-	var fteid FTEID
-	fteid.EType = IETypeFTEID
-	fteid.ELength = len
-	fteid.Flag = FTEIDFlag(getValue(data, 1)[0])
-	if fteid.Flag&0b00000100 == 1 { //CH=1
-		fteid.ChooseID = getValue(data, 1)
+	f := FTEID{
+		EType:   IETypeFTEID,
+		ELength: len,
+		Flag:    FTEIDFlag(getValue(data, 1)[0]),
+	}
+	if f.Flag&0b00000100 == 1 { //CH=1
+		f.ChooseID = getValue(data, 1)[0]
 	} else {
-		fteid.TEID = getValue(data, 4)
-		if fteid.Flag&0b00000001 == 1 { //V4=1
-			fteid.IPv4Addr = getValue(data, 4)
+		f.TEID = getValue(data, 4)
+		if f.Flag&0b00000001 == 1 { //V4=1
+			f.IPv4Addr = getValue(data, 4)
 		}
-		if fteid.Flag&0b00000010 == 1 { //V6=1
-			fteid.IPv6Addr = getValue(data, 16)
+		if f.Flag&0b00000010 == 1 { //V6=1
+			f.IPv6Addr = getValue(data, 16)
 		}
-		if fteid.Flag&0b00001000 == 1 { //CHID=1
-			fteid.ChooseID = getValue(data, 1)
+		if f.Flag&0b00001000 == 1 { //CHID=1
+			f.ChooseID = getValue(data, 1)[0]
 		}
 	}
-	return &fteid
+	return &f
 }
 
-func EncodeFTEID(fteid FTEID) []byte {
-	return setValue(fteid.EType, fteid.ELength, fteid.Flag, fteid.TEID, fteid.IPv4Addr, fteid.IPv6Addr, fteid.ChooseID)
+func EncodeFTEID(f FTEID) []byte {
+	return setValue(f.EType, f.ELength, f.Flag, f.TEID, f.IPv4Addr, f.IPv6Addr, f.ChooseID)
 }
 
 //判断是否含有FTEID
-func HasFTEID(fteid FTEID) bool {
-	if fteid.EType == 0 {
+func HasFTEID(f FTEID) bool {
+	if f.EType == 0 {
 		return false
 	}
 	return true

@@ -3,19 +3,18 @@ package elem
 type OuterHeaderRemoval struct {
 	EType                         IEType
 	ELength                       uint16
-	OuterHeaderRemovalDescription []byte //2byte
-	GTPUExtensionHeaderDeletion   []byte //4byte
-
+	OuterHeaderRemovalDescription byte
+	GTPUExtensionHeaderDeletion   byte
 }
 
 func DecodeOuterHeaderRemoval(data []byte, len uint16) *OuterHeaderRemoval {
 	o := OuterHeaderRemoval{
 		EType:                         IETypeOuterHeaderRemoval,
 		ELength:                       len,
-		OuterHeaderRemovalDescription: getValue(data, 1),
+		OuterHeaderRemovalDescription: getValue(data, 1)[0],
 	}
 	if len > 1 {
-		o.GTPUExtensionHeaderDeletion = getValue(data, 1)
+		o.GTPUExtensionHeaderDeletion = getValue(data, 1)[0]
 	}
 	return &o
 }

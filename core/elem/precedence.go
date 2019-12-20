@@ -3,7 +3,7 @@ package elem
 type Precedence struct {
 	EType      IEType
 	ELength    uint16
-	Precedence []byte
+	Precedence []byte //4byte
 }
 
 func NewPrecedence(p []byte) *Precedence {

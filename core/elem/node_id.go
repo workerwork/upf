@@ -33,13 +33,13 @@ func DecodeNodeID(data []byte, len uint16) *NodeID {
 	}
 }
 
-func EncodeNodeID(nodeID NodeID) []byte {
-	return setValue(nodeID.EType, nodeID.ELength, nodeID.NodeIDType, nodeID.NodeID)
+func EncodeNodeID(n NodeID) []byte {
+	return setValue(n.EType, n.ELength, n.NodeIDType, n.NodeID)
 }
 
 //判断是否含有NodeID
-func HasNodeID(nodeID NodeID) bool {
-	if nodeID.EType == 0 {
+func HasNodeID(n NodeID) bool {
+	if n.EType == 0 {
 		return false
 	}
 	return true

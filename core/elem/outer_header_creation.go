@@ -14,12 +14,12 @@ type OuterHeaderCreation struct {
 
 func DecodeOuterHeaderCreation(data []byte, len uint16) *OuterHeaderCreation {
 	return &OuterHeaderCreation{
-		EType:   IETypeOuterHeaderCreation,
-		ELength: len,
-		OuterHeaderCreationDescription:  getValue(data, 2),
-		TEID: getValue(data,4),
-		IPv4Addr: getValue(data,4),
-		IPv6Addr: getValue(data,16),
+		EType:                          IETypeOuterHeaderCreation,
+		ELength:                        len,
+		OuterHeaderCreationDescription: getValue(data, 2),
+		TEID:                           getValue(data, 4),
+		IPv4Addr:                       getValue(data, 4),
+		IPv6Addr:                       getValue(data, 16),
 		//TODO::
 	}
 }
