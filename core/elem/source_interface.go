@@ -2,11 +2,11 @@ package elem
 
 /**************************************************************************
               			Bits
-Octets		8	7	6	5	4	3	2	1
-1 to 2			Type = 20 (decimal)
-3 to 4			Length = n
-5				Spare	Interface value
-6 to (n+4)		These octet(s) is/are present only if explicitly specified
+Octets          8	7	6	5	4	3	2	1
+1 to 2          Type = 20 (decimal)
+3 to 4          Length = n
+5               Spare	Interface value
+6 to (n+4)      These octet(s) is/are present only if explicitly specified
 ****************************************************************************/
 type InterfaceType byte
 
