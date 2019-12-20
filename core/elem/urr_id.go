@@ -3,7 +3,7 @@ package elem
 type URRID struct {
 	EType   IEType
 	ELength uint16
-	URRID  []byte	//4byte
+	URRID  []byte	//4byte //TODO::
 }
 
 

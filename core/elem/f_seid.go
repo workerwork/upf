@@ -3,25 +3,25 @@ package elem
 type FSEIDFlag byte
 
 const (
-	FSEIDFlagIPv6  FSEIDFlag = 1	//bits:0000 0001
-	FSEIDFlagIPv4  FSEIDFlag = 2	//bits:0000 0010
-	FSEIDFlagIPv46 FSEIDFlag = 3	//bits:0000 0011
+	FSEIDFlagIPv6  FSEIDFlag = 1 //bits:0000 0001
+	FSEIDFlagIPv4  FSEIDFlag = 2 //bits:0000 0010
+	FSEIDFlagIPv46 FSEIDFlag = 3 //bits:0000 0011
 )
 
 type FSEID struct {
 	EType    IEType
 	ELength  uint16
-	Flag   FSEIDFlag
-	SEID     []byte
-	IPv4Addr []byte
-	IPv6Addr []byte
+	Flag     FSEIDFlag
+	SEID     []byte	//8byte
+	IPv4Addr []byte	//4byte
+	IPv6Addr []byte //16byte
 }
 
-func NewIPv4FSEID(seid []byte, ipv4 []byte) *FSEID {
+func NewIPv4FSEID(seid []byte, ipv4 uint16) *FSEID {
 	return &FSEID{
 		EType:    IETypeFSEID,
-		ELength:  uint16(13),
-		Flag:   FSEIDFlagIPv4,
+		ELength:  uint16(14),
+		Flag:     FSEIDFlagIPv4,
 		SEID:     seid,
 		IPv4Addr: ipv4,
 	}

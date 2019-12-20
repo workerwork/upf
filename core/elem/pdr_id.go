@@ -16,7 +16,7 @@ func NewPDRID(ruleID []byte) *PDRID {
 
 func DecodePDRID(data []byte, len uint16) *PDRID {
 	return &PDRID{
-		EType:   IETypeNodeID,
+		EType:   IETypePDRID,
 		ELength: len,
 		RuleID:  getValue(data, len),
 	}
