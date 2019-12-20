@@ -10,7 +10,7 @@ type OuterHeaderRemoval struct {
 
 func DecodeOuterHeaderRemoval(data []byte, len uint16) *OuterHeaderRemoval {
 	o := OuterHeaderRemoval{
-		EType:                         IETypeOuterHeaderCreation,
+		EType:                         IETypeOuterHeaderRemoval,
 		ELength:                       len,
 		OuterHeaderRemovalDescription: getValue(data, 1),
 	}
