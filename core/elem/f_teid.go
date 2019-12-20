@@ -27,7 +27,7 @@ func NewIPv4TEID(teid []byte, ipv4 []byte) *FTEID {
 	return &FTEID{}
 }
 
-func DecodeTEID(data []byte, len uint16) *FTEID {
+func DecodeFTEID(data []byte, len uint16) *FTEID {
 	var fteid FTEID
 	fteid.EType = IETypeFTEID
 	fteid.ELength = len
@@ -49,12 +49,12 @@ func DecodeTEID(data []byte, len uint16) *FTEID {
 	return &fteid
 }
 
-func EncodeTSEID(fteid FTEID) []byte {
+func EncodeFTEID(fteid FTEID) []byte {
 	return setValue(fteid.EType, fteid.ELength, fteid.Flag, fteid.TEID, fteid.IPv4Addr, fteid.IPv6Addr, fteid.ChooseID)
 }
 
 //判断是否含有FTEID
-func HasTEID(fteid FTEID) bool {
+func HasFTEID(fteid FTEID) bool {
 	if fteid.EType == 0 {
 		return false
 	}

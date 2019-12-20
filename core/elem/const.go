@@ -6,7 +6,7 @@ type IEType uint16
 const (
 	//Grouped IE, extendable
 	IETypeCreatePDR                  IEType = 1
-	TETypePDI                        IEType = 2
+	IETypePDI                        IEType = 2
 	IETypeCreateFAR                  IEType = 3
 	IETypeForwardingParameters       IEType = 4
 	IETypeDuplicatingParameters      IEType = 5
