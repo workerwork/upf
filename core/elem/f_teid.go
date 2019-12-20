@@ -42,6 +42,9 @@ func DecodeTEID(data []byte, len uint16) *FTEID {
 		if fteid.Flag&0b00000010 == 1 { //V6=1
 			fteid.IPv6Addr = getValue(data, 16)
 		}
+		if fteid.Flag&0b00001000 == 1 { //CHID=1
+			fteid.ChooseID = getValue(data, 1)
+		}
 	}
 	return &fteid
 }
