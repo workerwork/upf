@@ -18,7 +18,7 @@ type ForwardingParameters struct {
 
 func DecodeForwardingParameters(data []byte, len uint16) *ForwardingParameters {
 	fps := ForwardingParameters{
-		EType:   IETypePDI,
+		EType:   IETypeForwardingParameters,
 		ELength: len,
 	}
 	var cursor uint16
@@ -76,4 +76,3 @@ func HasForwardingParameters(fps ForwardingParameters) bool {
 	}
 	return true
 }
-
