@@ -10,7 +10,7 @@ type MeasurementMethod struct {
 
 func DecodeMeasurementMethod(data []byte, len uint16) *MeasurementMethod {
 	m := MeasurementMethod{
-		EType:   IETypePDRID,
+		EType:   IETypeMeasurementMethod,
 		ELength: len,
 	}
 	flag := getValue(data, 1)[0]

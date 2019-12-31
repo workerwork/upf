@@ -23,7 +23,7 @@ type ReportingTriggers struct {
 
 func DecodeReportingTriggers(data []byte, len uint16) *ReportingTriggers {
 	r := ReportingTriggers{
-		EType:   IETypeFTEID,
+		EType:   IETypeReportingTriggers,
 		ELength: len,
 	}
 	flag1 := getValue(data, 1)[0]
