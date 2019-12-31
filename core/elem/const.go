@@ -156,3 +156,13 @@ const (
 	IETypeSMFSetID                                        IEType = 180
 	IETypeQuotaValidityTime                               IEType = 181
 )
+
+type InterfaceType byte
+
+const (
+	InterfaceTypeAccess       InterfaceType = iota //0
+	InterfaceTypeCore                              //1
+	InterfaceTypeSGiLAN                            //2
+	InterfaceTypeCPFunction                        //3
+	InterfaceType5GVNInternal                      //4
+)

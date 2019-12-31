@@ -3,14 +3,14 @@ package elem
 type DestinationInterface struct {
 	EType     IEType
 	ELength   uint16
-	Interface byte //4bits
+	Interface InterfaceType //4bits
 }
 
 func DecodeDestinationInterface(data []byte, len uint16) *DestinationInterface {
 	return &DestinationInterface{
 		EType:     IETypeDestinationInterface,
 		ELength:   len,
-		Interface: getValue(data, 1)[0],
+		Interface: InterfaceType(getValue(data, len)[0]),
 	}
 }
 
