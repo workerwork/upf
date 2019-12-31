@@ -55,10 +55,7 @@ func DecodePDI(data []byte, len uint16) *PDI {
 }
 
 func EncodePDI(pdi PDI) []byte {
-	ret := setValue(pdi.EType, pdi.ELength)
-	if HasSourceInterface(pdi.SourceInterface) {
-		ret = setValue(ret, pdi.SourceInterface)
-	}
+	ret := setValue(pdi.EType, pdi.ELength, pdi.SourceInterface) //SourceInterface 为M信元
 	if HasFTEID(pdi.FTEID) {
 		ret = setValue(ret, pdi.FTEID)
 	}
@@ -71,7 +68,7 @@ func EncodePDI(pdi PDI) []byte {
 	return ret
 }
 
-//判断是否含有SourceInterface
+//判断是否含有PDI
 func HasPDI(pdi PDI) bool {
 	if pdi.EType == 0 {
 		return false
