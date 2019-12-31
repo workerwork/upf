@@ -79,7 +79,7 @@ func EncodeReportingTriggers(r ReportingTriggers) []byte {
 	var flag1, flag2 byte
 	switch {
 	case r.PERIO:
-		flag1 = 0b00000001
+		flag1 |= 0b00000001
 		fallthrough
 	case r.VOLTH:
 		flag1 |= 0b00000010
