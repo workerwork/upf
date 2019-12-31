@@ -21,7 +21,7 @@ type CreatePDR struct {
 
 func DecodeCreatePDR(data []byte, len uint16) *CreatePDR {
 	createPDR := CreatePDR{
-		EType:   IETypeCreatedPDR,
+		EType:   IETypeCreatePDR,
 		ELength: len,
 		URRIDs:  []URRID{},
 		QERIDs:  []QERID{},
