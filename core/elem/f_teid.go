@@ -29,17 +29,17 @@ func DecodeFTEID(data []byte, len uint16) *FTEID {
 		ELength: len,
 		Flag:    FTEIDFlag(getValue(data, 1)[0]),
 	}
-	if f.Flag&0b00000100 == 1 { //CH=1
+	if f.Flag&0b00000100>>2 == 1 { //CH=1
 		f.ChooseID = getValue(data, 1)[0]
 	} else {
 		f.TEID = getValue(data, 4)
 		if f.Flag&0b00000001 == 1 { //V4=1
 			f.IPv4Addr = getValue(data, 4)
 		}
-		if f.Flag&0b00000010 == 1 { //V6=1
+		if f.Flag&0b00000010>>1 == 1 { //V6=1
 			f.IPv6Addr = getValue(data, 16)
 		}
-		if f.Flag&0b00001000 == 1 { //CHID=1
+		if f.Flag&0b00001000>>3 == 1 { //CHID=1
 			f.ChooseID = getValue(data, 1)[0]
 		}
 	}

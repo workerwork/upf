@@ -3,12 +3,12 @@ package elem
 type ActionType byte
 
 const (
-	_    ActionType = iota //0
-	DROP                   //1
-	FORW                   //2
-	BUFF                   //3
-	NOCP                   //4
-	DUPL                   //5
+	_              ActionType = iota //0
+	ActionTypeDROP                   //1
+	ActionTypeFORW                   //2
+	ActionTypeBUFF                   //3
+	ActionTypeNOCP                   //4
+	ActionTypeDUPL                   //5
 )
 
 type ApplyAction struct {
