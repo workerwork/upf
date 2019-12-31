@@ -17,13 +17,13 @@ type ForwardingParameters struct {
 }
 
 func DecodeForwardingParameters(data []byte, len uint16) *ForwardingParameters {
-	forwardingParameters := ForwardingParameters{
+	fps := ForwardingParameters{
 		EType:   IETypePDI,
 		ELength: len,
 	}
 	var cursor uint16
 	buf := bytes.NewBuffer(data)
-	for cursor < forwardingParameters.ELength {
+	for cursor < fps.ELength {
 		var (
 			eType IEType
 			eLen  uint16
@@ -40,38 +40,38 @@ func DecodeForwardingParameters(data []byte, len uint16) *ForwardingParameters {
 		}
 		switch eType {
 		case IETypeSourceInterface:
-			forwardingParameters.TransportLevelMarking = *DecodeTransportLevelMarking(eValue, eLen)
+			fps.TransportLevelMarking = *DecodeTransportLevelMarking(eValue, eLen)
 		case IETypeFTEID:
-			forwardingParameters.DestinationInterface = *DecodeDestinationInterface(eValue, eLen)
+			fps.DestinationInterface = *DecodeDestinationInterface(eValue, eLen)
 		case IETypeNetworkInstance:
-			forwardingParameters.NetworkInstance = *DecodeNetworkInstance(eValue, eLen)
+			fps.NetworkInstance = *DecodeNetworkInstance(eValue, eLen)
 		case IETypeQFI:
-			forwardingParameters.OuterHeaderCreation = *DecodeOuterHeaderCreation(eValue, eLen)
+			fps.OuterHeaderCreation = *DecodeOuterHeaderCreation(eValue, eLen)
 		default:
 			log.Println("err: unknown tlv type", eType) //TODO::
 		}
 		cursor = cursor + eLen + 4
 	}
-	return &forwardingParameters
+	return &fps
 }
 
-func EncodeForwardingParameters(forwardingParameters ForwardingParameters) []byte {
-	ret := setValue(forwardingParameters.EType, forwardingParameters.ELength, forwardingParameters.DestinationInterface) //DestinationInterface 为M信元
-	if HasNetworkInstance(forwardingParameters.NetworkInstance) {
-		ret = setValue(ret, forwardingParameters.NetworkInstance)
+func EncodeForwardingParameters(fps ForwardingParameters) []byte {
+	ret := setValue(fps.EType, fps.ELength, fps.DestinationInterface) //DestinationInterface 为M信元
+	if HasNetworkInstance(fps.NetworkInstance) {
+		ret = setValue(ret, fps.NetworkInstance)
 	}
-	if HasTransportLevelMarking(forwardingParameters.TransportLevelMarking) {
-		ret = setValue(ret, forwardingParameters.TransportLevelMarking)
+	if HasTransportLevelMarking(fps.TransportLevelMarking) {
+		ret = setValue(ret, fps.TransportLevelMarking)
 	}
-	if HasOuterHeaderCreation(forwardingParameters.OuterHeaderCreation) {
-		ret = setValue(ret, forwardingParameters.OuterHeaderCreation)
+	if HasOuterHeaderCreation(fps.OuterHeaderCreation) {
+		ret = setValue(ret, fps.OuterHeaderCreation)
 	}
 	return ret
 }
 
 //判断是否含有ForwardingParameters
-func HasForwardingParameters(forwardingParameters ForwardingParameters) bool {
-	if forwardingParameters.EType == 0 {
+func HasForwardingParameters(fps ForwardingParameters) bool {
+	if fps.EType == 0 {
 		return false
 	}
 	return true
