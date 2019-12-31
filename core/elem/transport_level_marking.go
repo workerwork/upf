@@ -1,16 +1,16 @@
 package elem
 
 type TransportLevelMarking struct {
-	EType   IEType
-	ELength uint16
-	TosOrTrafficClass  []byte //2byte
+	EType             IEType
+	ELength           uint16
+	TosOrTrafficClass []byte //2byte
 }
 
 func DecodeTransportLevelMarking(data []byte, len uint16) *TransportLevelMarking {
 	return &TransportLevelMarking{
-		EType:   IETypeTransportLevelMarking,
-		ELength: len,
-		TosOrTrafficClass:  getValue(data, 2),
+		EType:             IETypeTransportLevelMarking,
+		ELength:           len,
+		TosOrTrafficClass: getValue(data, 2),
 	}
 }
 
@@ -25,4 +25,3 @@ func HasTransportLevelMarking(t TransportLevelMarking) bool {
 	}
 	return true
 }
-
