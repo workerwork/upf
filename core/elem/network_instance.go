@@ -18,7 +18,7 @@ func EncodeNetworkInstance(n NetworkInstance) []byte {
 	return setValue(n.EType, n.ELength, n.NetworkInstance)
 }
 
-//判断是否含有SourceInterface
+//判断是否含有NetworkInstance
 func HasNetworkInstance(n NetworkInstance) bool {
 	if n.EType == 0 {
 		return false
