@@ -74,10 +74,10 @@ func EncodeCreatePDR(createPDR CreatePDR) []byte {
 	if HasFARID(createPDR.FARID) {
 		ret = setValue(ret, createPDR.FARID)
 	}
-	for urrID := range createPDR.URRIDs {
+	for _, urrID := range createPDR.URRIDs {
 		ret = setValue(ret, urrID)
 	}
-	for qerID := range createPDR.QERIDs {
+	for _, qerID := range createPDR.QERIDs {
 		ret = setValue(ret, qerID)
 	}
 	return ret
