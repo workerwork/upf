@@ -21,7 +21,7 @@ func EncodeMBR(m MBR) []byte {
 }
 
 //判断是否含有MBR
-func HasGateMBR(m MBR) bool {
+func HasMBR(m MBR) bool {
 	if m.EType == 0 {
 		return false
 	}
