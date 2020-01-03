@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type MBR struct {
 	EType   IEType
 	ELength uint16
@@ -7,12 +9,12 @@ type MBR struct {
 	DLMBR   []byte //5bytes
 }
 
-func DecodeMBR(data []byte, len uint16) *MBR {
+func DecodeMBR(buf *bytes.Buffer, len uint16) *MBR {
 	return &MBR{
 		EType:   IETypeMBR,
 		ELength: len,
-		ULMBR:   getValue(data, 5),
-		DLMBR:   getValue(data, 5),
+		ULMBR:   getValue(buf, 5),
+		DLMBR:   getValue(buf, 5),
 	}
 }
 

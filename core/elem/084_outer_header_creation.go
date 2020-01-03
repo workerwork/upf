@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type OuterHeaderCreation struct {
 	EType                          IEType
 	ELength                        uint16
@@ -12,14 +14,14 @@ type OuterHeaderCreation struct {
 	STAG                           []byte //3byte
 }
 
-func DecodeOuterHeaderCreation(data []byte, len uint16) *OuterHeaderCreation {
+func DecodeOuterHeaderCreation(buf *bytes.Buffer, len uint16) *OuterHeaderCreation {
 	return &OuterHeaderCreation{
 		EType:                          IETypeOuterHeaderCreation,
 		ELength:                        len,
-		OuterHeaderCreationDescription: getValue(data, 2),
-		TEID:                           getValue(data, 4),
-		IPv4Addr:                       getValue(data, 4),
-		IPv6Addr:                       getValue(data, 16),
+		OuterHeaderCreationDescription: getValue(buf, 2),
+		TEID:                           getValue(buf, 4),
+		IPv4Addr:                       getValue(buf, 4),
+		IPv6Addr:                       getValue(buf, 16),
 		//TODO::
 	}
 }

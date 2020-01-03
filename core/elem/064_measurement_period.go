@@ -1,16 +1,18 @@
 package elem
 
+import "bytes"
+
 type MeasurementPeriod struct {
 	EType             IEType
 	ELength           uint16
 	MeasurementPeriod []byte //4byte
 }
 
-func DecodeMeasurementPeriod(data []byte, len uint16) *MeasurementPeriod {
+func DecodeMeasurementPeriod(buf *bytes.Buffer, len uint16) *MeasurementPeriod {
 	return &MeasurementPeriod{
 		EType:             IETypeMeasurementPeriod,
 		ELength:           len,
-		MeasurementPeriod: getValue(data, 4),
+		MeasurementPeriod: getValue(buf, 4),
 	}
 }
 

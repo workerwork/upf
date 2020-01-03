@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type GateStatusType byte
 
 const (
@@ -14,14 +16,14 @@ type GateStatus struct {
 	ULGate  GateStatusType
 }
 
-func DecodeGateStatus(data []byte, len uint16) *GateStatus {
+func DecodeGateStatus(buf *bytes.Buffer, len uint16) *GateStatus {
 	g := GateStatus{
 		EType:   IETypeGateStatus,
 		ELength: len,
 		DLGate:  GateStatusTypeCLOSED,
 		ULGate:  GateStatusTypeCLOSED,
 	}
-	flag := getValue(data, 1)[0]
+	flag := getValue(buf, 1)[0]
 	if flag&0b00000001 == 0 {
 		g.DLGate = GateStatusTypeOPEN
 	}

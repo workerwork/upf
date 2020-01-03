@@ -15,13 +15,12 @@ type PDI struct {
 	QFI
 }
 
-func DecodePDI(data []byte, len uint16) *PDI {
+func DecodePDI(buf *bytes.Buffer, len uint16) *PDI {
 	pdi := PDI{
 		EType:   IETypePDI,
 		ELength: len,
 	}
 	var cursor uint16
-	buf := bytes.NewBuffer(data)
 	for cursor < pdi.ELength {
 		var (
 			eType IEType
@@ -33,21 +32,26 @@ func DecodePDI(data []byte, len uint16) *PDI {
 		if err := binary.Read(buf, binary.BigEndian, &eLen); err != nil {
 			log.Println(err) //TODO::
 		}
-		eValue := make([]byte, eLen)
-		if err := binary.Read(buf, binary.BigEndian, &eValue); err != nil {
+		e := make([]byte, eLen)
+		if err := binary.Read(buf, binary.BigEndian, &e); err != nil {
 			log.Println(err) //TODO::
 		}
+		eValue := bytes.NewBuffer(e)
 		switch eType {
 		case IETypeSourceInterface:
 			pdi.SourceInterface = *DecodeSourceInterface(eValue, eLen)
+			log.Println("pdi.SourceInterface: ", pdi.SourceInterface)
 		case IETypeFTEID:
 			pdi.FTEID = *DecodeFTEID(eValue, eLen)
+			log.Println("pdi.FTEID: ", pdi.FTEID)
 		case IETypeNetworkInstance:
 			pdi.NetworkInstance = *DecodeNetworkInstance(eValue, eLen)
+			log.Println("pdi.NetworkInstance: ", pdi.NetworkInstance)
 		case IETypeQFI:
 			pdi.QFI = *DecodeQFI(eValue, eLen)
+			log.Println("pdi.QFI: ", pdi.QFI)
 		default:
-			log.Println("err: unknown tlv type", eType) //TODO::
+			log.Println("pdi err: unknown tlv type", eType) //TODO::
 		}
 		cursor = cursor + eLen + 4
 	}

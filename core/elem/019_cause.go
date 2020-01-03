@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type CauseType byte
 
 const (
@@ -35,11 +37,11 @@ func NewCause(cause CauseType) *Cause {
 	}
 }
 
-func DecodeCause(data []byte, len uint16) *Cause {
+func DecodeCause(buf *bytes.Buffer, len uint16) *Cause {
 	return &Cause{
 		EType:   IETypeCause,
 		ELength: len,
-		Cause:   CauseType(getValue(data, len-1)[0]),
+		Cause:   CauseType(getValue(buf, len-1)[0]),
 	}
 }
 

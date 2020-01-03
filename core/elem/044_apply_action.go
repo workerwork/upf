@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type ActionType byte
 
 const (
@@ -17,11 +19,11 @@ type ApplyAction struct {
 	Action  ActionType
 }
 
-func DecodeApplyAction(data []byte, len uint16) *ApplyAction {
+func DecodeApplyAction(buf *bytes.Buffer, len uint16) *ApplyAction {
 	return &ApplyAction{
 		EType:   IETypeApplyAction,
 		ELength: len,
-		Action:  ActionType(getValue(data, 1)[0]),
+		Action:  ActionType(getValue(buf, 1)[0]),
 	}
 }
 

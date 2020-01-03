@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type PDNTypeType byte
 
 const (
@@ -17,11 +19,11 @@ type PDNType struct {
 	PDNType PDNTypeType
 }
 
-func DecodePDNType(data []byte, len uint16) *PDNType {
+func DecodePDNType(buf *bytes.Buffer, len uint16) *PDNType {
 	return &PDNType{
 		EType:   IETypePDNType,
 		ELength: len,
-		PDNType: PDNTypeType(getValue(data, 1)[0]),
+		PDNType: PDNTypeType(getValue(buf, 1)[0]),
 	}
 }
 

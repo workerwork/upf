@@ -16,13 +16,12 @@ type CreateURR struct {
 	//TODO::
 }
 
-func DecodeCreateURR(data []byte, len uint16) *CreateURR {
+func DecodeCreateURR(buf *bytes.Buffer, len uint16) *CreateURR {
 	createURR := CreateURR{
 		EType:   IETypeCreateURR,
 		ELength: len,
 	}
 	var cursor uint16
-	buf := bytes.NewBuffer(data)
 	for cursor < createURR.ELength {
 		var (
 			eType IEType
@@ -34,10 +33,11 @@ func DecodeCreateURR(data []byte, len uint16) *CreateURR {
 		if err := binary.Read(buf, binary.BigEndian, &eLen); err != nil {
 			log.Println(err) //TODO::
 		}
-		eValue := make([]byte, eLen)
-		if err := binary.Read(buf, binary.BigEndian, &eValue); err != nil {
+		e := make([]byte, eLen)
+		if err := binary.Read(buf, binary.BigEndian, &e); err != nil {
 			log.Println(err) //TODO::
 		}
+		eValue := bytes.NewBuffer(e)
 		switch eType {
 		case IETypeForwardingParameters:
 			createURR.ReportingTriggers = *DecodeReportingTriggers(eValue, eLen)

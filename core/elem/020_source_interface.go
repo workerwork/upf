@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 /**************************************************************************
               			Bits
 Octets          8	7	6	5	4	3	2	1
@@ -15,11 +17,11 @@ type SourceInterface struct {
 	Interface InterfaceType //4bits
 }
 
-func DecodeSourceInterface(data []byte, len uint16) *SourceInterface {
+func DecodeSourceInterface(buf *bytes.Buffer, len uint16) *SourceInterface {
 	return &SourceInterface{
 		EType:     IETypeSourceInterface,
 		ELength:   len,
-		Interface: InterfaceType(getValue(data, len)[0]),
+		Interface: InterfaceType(getValue(buf, len)[0]),
 	}
 }
 

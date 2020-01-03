@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type Precedence struct {
 	EType      IEType
 	ELength    uint16
@@ -14,11 +16,11 @@ func NewPrecedence(p []byte) *Precedence {
 	}
 }
 
-func DecodePrecedence(data []byte, len uint16) *Precedence {
+func DecodePrecedence(buf *bytes.Buffer, len uint16) *Precedence {
 	return &Precedence{
 		EType:      IETypePrecedence,
 		ELength:    len,
-		Precedence: getValue(data, len),
+		Precedence: getValue(buf, len),
 	}
 }
 

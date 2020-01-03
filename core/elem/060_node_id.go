@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type NodeIDType byte
 
 const (
@@ -24,12 +26,12 @@ func NewIPv4NodeID(ipv4 []byte) *NodeID {
 	}
 }
 
-func DecodeNodeID(data []byte, len uint16) *NodeID {
+func DecodeNodeID(buf *bytes.Buffer, len uint16) *NodeID {
 	return &NodeID{
 		EType:      IETypeNodeID,
 		ELength:    len,
-		NodeIDType: NodeIDType(getValue(data, 1)[0]),
-		NodeID:     getValue(data, len-1),
+		NodeIDType: NodeIDType(getValue(buf, 1)[0]),
+		NodeID:     getValue(buf, len-1),
 	}
 }
 

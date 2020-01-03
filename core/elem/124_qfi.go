@@ -1,16 +1,18 @@
 package elem
 
+import "bytes"
+
 type QFI struct {
 	EType   IEType
 	ELength uint16
 	QFI     byte
 }
 
-func DecodeQFI(data []byte, len uint16) *QFI {
+func DecodeQFI(buf *bytes.Buffer, len uint16) *QFI {
 	return &QFI{
 		EType:   IETypeQFI,
 		ELength: len,
-		QFI:     getValue(data, len)[0],
+		QFI:     getValue(buf, len)[0],
 	}
 }
 

@@ -1,16 +1,18 @@
 package elem
 
+import "bytes"
+
 type QERID struct {
 	EType   IEType
 	ELength uint16
 	QERID   []byte //4byte
 }
 
-func DecodeQERID(data []byte, len uint16) *QERID {
+func DecodeQERID(buf *bytes.Buffer, len uint16) *QERID {
 	return &QERID{
 		EType:   IETypeQERID,
 		ELength: len,
-		QERID:   getValue(data, 4),
+		QERID:   getValue(buf, 4),
 	}
 }
 

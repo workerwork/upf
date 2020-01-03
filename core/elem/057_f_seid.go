@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type FSEIDFlag byte
 
 const (
@@ -17,21 +19,21 @@ type FSEID struct {
 	IPv6Addr []byte //16byte
 }
 
-func DecodeFSEID(data []byte, len uint16) *FSEID {
+func DecodeFSEID(buf *bytes.Buffer, len uint16) *FSEID {
 	f := FSEID{
 		EType:   IETypeFSEID,
 		ELength: len,
-		Flag:    FSEIDFlag(getValue(data, 1)[0]),
-		SEID:    getValue(data, 8),
+		Flag:    FSEIDFlag(getValue(buf, 1)[0]),
+		SEID:    getValue(buf, 8),
 	}
 	switch f.Flag {
 	case FSEIDFlagIPv4:
-		f.IPv4Addr = getValue(data, 4)
+		f.IPv4Addr = getValue(buf, 4)
 	case FSEIDFlagIPv6:
-		f.IPv6Addr = getValue(data, 16)
+		f.IPv6Addr = getValue(buf, 16)
 	case FSEIDFlagIPv46:
-		f.IPv4Addr = getValue(data, 4)
-		f.IPv6Addr = getValue(data, 16)
+		f.IPv4Addr = getValue(buf, 4)
+		f.IPv6Addr = getValue(buf, 16)
 	}
 	return &f
 }

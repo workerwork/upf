@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type OuterHeaderRemoval struct {
 	EType                         IEType
 	ELength                       uint16
@@ -7,14 +9,14 @@ type OuterHeaderRemoval struct {
 	GTPUExtensionHeaderDeletion   byte
 }
 
-func DecodeOuterHeaderRemoval(data []byte, len uint16) *OuterHeaderRemoval {
+func DecodeOuterHeaderRemoval(buf *bytes.Buffer, len uint16) *OuterHeaderRemoval {
 	o := OuterHeaderRemoval{
 		EType:                         IETypeOuterHeaderRemoval,
 		ELength:                       len,
-		OuterHeaderRemovalDescription: getValue(data, 1)[0],
+		OuterHeaderRemovalDescription: getValue(buf, 1)[0],
 	}
 	if len > 1 {
-		o.GTPUExtensionHeaderDeletion = getValue(data, 1)[0]
+		o.GTPUExtensionHeaderDeletion = getValue(buf, 1)[0]
 	}
 	return &o
 }

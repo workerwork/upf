@@ -16,13 +16,12 @@ type ForwardingParameters struct {
 	//TODO::
 }
 
-func DecodeForwardingParameters(data []byte, len uint16) *ForwardingParameters {
+func DecodeForwardingParameters(buf *bytes.Buffer, len uint16) *ForwardingParameters {
 	fps := ForwardingParameters{
 		EType:   IETypeForwardingParameters,
 		ELength: len,
 	}
 	var cursor uint16
-	buf := bytes.NewBuffer(data)
 	for cursor < fps.ELength {
 		var (
 			eType IEType
@@ -34,10 +33,11 @@ func DecodeForwardingParameters(data []byte, len uint16) *ForwardingParameters {
 		if err := binary.Read(buf, binary.BigEndian, &eLen); err != nil {
 			log.Println(err) //TODO::
 		}
-		eValue := make([]byte, eLen)
-		if err := binary.Read(buf, binary.BigEndian, &eValue); err != nil {
+		e := make([]byte, eLen)
+		if err := binary.Read(buf, binary.BigEndian, &e); err != nil {
 			log.Println(err) //TODO::
 		}
+		eValue := bytes.NewBuffer(e)
 		switch eType {
 		case IETypeSourceInterface:
 			fps.TransportLevelMarking = *DecodeTransportLevelMarking(eValue, eLen)

@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type PDRID struct {
 	EType   IEType
 	ELength uint16
@@ -14,11 +16,11 @@ func NewPDRID(r []byte) *PDRID {
 	}
 }
 
-func DecodePDRID(data []byte, len uint16) *PDRID {
+func DecodePDRID(buf *bytes.Buffer, len uint16) *PDRID {
 	return &PDRID{
 		EType:   IETypePDRID,
 		ELength: len,
-		RuleID:  getValue(data, 2),
+		RuleID:  getValue(buf, 2),
 	}
 }
 

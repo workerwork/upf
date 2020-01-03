@@ -1,5 +1,10 @@
 package elem
 
+import (
+	"bytes"
+	"log"
+)
+
 type FTEIDFlag byte
 
 /**
@@ -23,24 +28,27 @@ type FTEID struct {
 	ChooseID byte
 }
 
-func DecodeFTEID(data []byte, len uint16) *FTEID {
+func DecodeFTEID(buf *bytes.Buffer, len uint16) *FTEID {
 	f := FTEID{
 		EType:   IETypeFTEID,
 		ELength: len,
-		Flag:    FTEIDFlag(getValue(data, 1)[0]),
+		Flag:    FTEIDFlag(getValue(buf, 1)[0]),
 	}
 	if f.Flag&0b00000100>>2 == 1 { //CH=1
-		f.ChooseID = getValue(data, 1)[0]
+		f.ChooseID = getValue(buf, 1)[0]
 	} else {
-		f.TEID = getValue(data, 4)
+		log.Println("buf: ", buf)
+		f.TEID = getValue(buf, 4)
+		log.Println("buf: ", buf)
+		log.Println("TEID: ", f.TEID)
 		if f.Flag&0b00000001 == 1 { //V4=1
-			f.IPv4Addr = getValue(data, 4)
+			f.IPv4Addr = getValue(buf, 4)
 		}
 		if f.Flag&0b00000010>>1 == 1 { //V6=1
-			f.IPv6Addr = getValue(data, 16)
+			f.IPv6Addr = getValue(buf, 16)
 		}
 		if f.Flag&0b00001000>>3 == 1 { //CHID=1
-			f.ChooseID = getValue(data, 1)[0]
+			f.ChooseID = getValue(buf, 1)[0]
 		}
 	}
 	return &f

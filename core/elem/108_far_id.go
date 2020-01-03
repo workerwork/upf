@@ -1,16 +1,18 @@
 package elem
 
+import "bytes"
+
 type FARID struct {
 	EType   IEType
 	ELength uint16
 	FARID   []byte //4byte
 }
 
-func DecodeFARID(data []byte, len uint16) *FARID {
+func DecodeFARID(buf *bytes.Buffer, len uint16) *FARID {
 	return &FARID{
 		EType:   IETypeFARID,
 		ELength: len,
-		FARID:   getValue(data, 4),
+		FARID:   getValue(buf, 4),
 	}
 }
 

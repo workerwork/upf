@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type RecoveryTimeStamp struct {
 	EType             IEType
 	ELength           uint16
@@ -14,11 +16,11 @@ func NewRecoveryTimeStamp(r []byte) *RecoveryTimeStamp {
 	}
 }
 
-func DecodeRecoveryTimeStamp(data []byte, len uint16) *RecoveryTimeStamp {
+func DecodeRecoveryTimeStamp(buf *bytes.Buffer, len uint16) *RecoveryTimeStamp {
 	return &RecoveryTimeStamp{
 		EType:             IETypeRecoveryTimeStamp,
 		ELength:           len,
-		RecoveryTimeStamp: getValue(data, len),
+		RecoveryTimeStamp: getValue(buf, len),
 	}
 }
 

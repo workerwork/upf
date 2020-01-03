@@ -1,16 +1,18 @@
 package elem
 
+import "bytes"
+
 type DestinationInterface struct {
 	EType     IEType
 	ELength   uint16
 	Interface InterfaceType //4bits
 }
 
-func DecodeDestinationInterface(data []byte, len uint16) *DestinationInterface {
+func DecodeDestinationInterface(buf *bytes.Buffer, len uint16) *DestinationInterface {
 	return &DestinationInterface{
 		EType:     IETypeDestinationInterface,
 		ELength:   len,
-		Interface: InterfaceType(getValue(data, len)[0]),
+		Interface: InterfaceType(getValue(buf, len)[0]),
 	}
 }
 

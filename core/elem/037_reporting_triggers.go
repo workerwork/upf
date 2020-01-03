@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 //type ReportingTriggersFlag byte
 
 type ReportingTriggers struct {
@@ -21,12 +23,12 @@ type ReportingTriggers struct {
 	EVEQU   bool
 }
 
-func DecodeReportingTriggers(data []byte, len uint16) *ReportingTriggers {
+func DecodeReportingTriggers(buf *bytes.Buffer, len uint16) *ReportingTriggers {
 	r := ReportingTriggers{
 		EType:   IETypeReportingTriggers,
 		ELength: len,
 	}
-	flag1 := getValue(data, 1)[0]
+	flag1 := getValue(buf, 1)[0]
 	switch {
 	case flag1&0b00000001 == 1:
 		r.PERIO = true
@@ -52,7 +54,7 @@ func DecodeReportingTriggers(data []byte, len uint16) *ReportingTriggers {
 	case flag1&0b10000000>>7 == 1:
 		r.LIUSA = true
 	}
-	flag2 := getValue(data, 1)[0]
+	flag2 := getValue(buf, 1)[0]
 	switch {
 	case flag2&0b00000001 == 1:
 		r.VOLQU = true

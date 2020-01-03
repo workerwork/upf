@@ -1,5 +1,7 @@
 package elem
 
+import "bytes"
+
 type MeasurementMethod struct {
 	EType   IEType
 	ELength uint16
@@ -8,12 +10,12 @@ type MeasurementMethod struct {
 	EVENT   bool
 }
 
-func DecodeMeasurementMethod(data []byte, len uint16) *MeasurementMethod {
+func DecodeMeasurementMethod(buf *bytes.Buffer, len uint16) *MeasurementMethod {
 	m := MeasurementMethod{
 		EType:   IETypeMeasurementMethod,
 		ELength: len,
 	}
-	flag := getValue(data, 1)[0]
+	flag := getValue(buf, 1)[0]
 	switch {
 	case flag&0b00000001 == 1:
 		m.DURAT = true

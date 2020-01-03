@@ -34,6 +34,8 @@ type Msg struct {
 func Parse(buf *bytes.Buffer) *Msg {
 	var m Msg
 	//解析消息头
+	//b := elem.GetValue(buf, 1)[0]
+
 	var b byte
 	if err := binary.Read(buf, binary.BigEndian, &b); err != nil {
 		log.Println("err") //TODO::
@@ -86,10 +88,12 @@ func Parse(buf *bytes.Buffer) *Msg {
 		if err := binary.Read(buf, binary.BigEndian, &eLen); err != nil {
 			log.Println("err") //TODO::
 		}
-		eValue := make([]byte, eLen)
-		if err := binary.Read(buf, binary.BigEndian, &eValue); err != nil {
+		e := make([]byte, eLen)
+		//eValue := *bytes.NewBuffer(make([]byte, eLen))
+		if err := binary.Read(buf, binary.BigEndian, e); err != nil {
 			log.Println("err") //TODO::
 		}
+		eValue := bytes.NewBuffer(e)
 		switch eType {
 		case elem.IETypeNodeID:
 			m.NodeID = *elem.DecodeNodeID(eValue, eLen)

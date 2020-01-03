@@ -19,7 +19,7 @@ type CreatePDR struct {
 	//TODO::
 }
 
-func DecodeCreatePDR(data []byte, len uint16) *CreatePDR {
+func DecodeCreatePDR(buf *bytes.Buffer, len uint16) *CreatePDR {
 	createPDR := CreatePDR{
 		EType:   IETypeCreatePDR,
 		ELength: len,
@@ -27,7 +27,6 @@ func DecodeCreatePDR(data []byte, len uint16) *CreatePDR {
 		QERIDs:  []QERID{},
 	}
 	var cursor uint16
-	buf := bytes.NewBuffer(data)
 	for cursor < createPDR.ELength {
 		var (
 			eType IEType
@@ -39,10 +38,11 @@ func DecodeCreatePDR(data []byte, len uint16) *CreatePDR {
 		if err := binary.Read(buf, binary.BigEndian, &eLen); err != nil {
 			log.Println(err) //TODO::
 		}
-		eValue := make([]byte, eLen)
-		if err := binary.Read(buf, binary.BigEndian, &eValue); err != nil {
+		e := make([]byte, eLen)
+		if err := binary.Read(buf, binary.BigEndian, &e); err != nil {
 			log.Println(err) //TODO::
 		}
+		eValue := bytes.NewBuffer(e)
 		switch eType {
 		case IETypePDI:
 			createPDR.PDI = *DecodePDI(eValue, eLen)

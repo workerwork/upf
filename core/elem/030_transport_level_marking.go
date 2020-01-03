@@ -1,16 +1,18 @@
 package elem
 
+import "bytes"
+
 type TransportLevelMarking struct {
 	EType             IEType
 	ELength           uint16
 	TosOrTrafficClass []byte //2byte
 }
 
-func DecodeTransportLevelMarking(data []byte, len uint16) *TransportLevelMarking {
+func DecodeTransportLevelMarking(buf *bytes.Buffer, len uint16) *TransportLevelMarking {
 	return &TransportLevelMarking{
 		EType:             IETypeTransportLevelMarking,
 		ELength:           len,
-		TosOrTrafficClass: getValue(data, 2),
+		TosOrTrafficClass: getValue(buf, 2),
 	}
 }
 

@@ -16,13 +16,12 @@ type CreateQER struct {
 	//TODO::
 }
 
-func DecodeCreateQER(data []byte, len uint16) *CreateQER {
+func DecodeCreateQER(buf *bytes.Buffer, len uint16) *CreateQER {
 	createQER := CreateQER{
 		EType:   IETypeCreateQER,
 		ELength: len,
 	}
 	var cursor uint16
-	buf := bytes.NewBuffer(data)
 	for cursor < createQER.ELength {
 		var (
 			eType IEType
@@ -34,10 +33,11 @@ func DecodeCreateQER(data []byte, len uint16) *CreateQER {
 		if err := binary.Read(buf, binary.BigEndian, &eLen); err != nil {
 			log.Println(err) //TODO::
 		}
-		eValue := make([]byte, eLen)
-		if err := binary.Read(buf, binary.BigEndian, &eValue); err != nil {
+		e := make([]byte, eLen)
+		if err := binary.Read(buf, binary.BigEndian, &e); err != nil {
 			log.Println(err) //TODO::
 		}
+		eValue := bytes.NewBuffer(e)
 		switch eType {
 		case IETypeGateStatus:
 			createQER.GateStatus = *DecodeGateStatus(eValue, eLen)

@@ -1,16 +1,18 @@
 package elem
 
+import "bytes"
+
 type URRID struct {
 	EType   IEType
 	ELength uint16
 	URRID   []byte //4byte //TODO::
 }
 
-func DecodeURRID(data []byte, len uint16) *URRID {
+func DecodeURRID(buf *bytes.Buffer, len uint16) *URRID {
 	return &URRID{
 		EType:   IETypeURRID,
 		ELength: len,
-		URRID:   getValue(data, 4),
+		URRID:   getValue(buf, 4),
 	}
 }
 
