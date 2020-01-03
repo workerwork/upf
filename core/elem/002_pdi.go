@@ -13,6 +13,7 @@ type PDI struct {
 	FTEID
 	NetworkInstance
 	QFI
+	UEIPAddress
 }
 
 func DecodePDI(buf *bytes.Buffer, len uint16) *PDI {
@@ -40,21 +41,24 @@ func DecodePDI(buf *bytes.Buffer, len uint16) *PDI {
 		switch eType {
 		case IETypeSourceInterface:
 			pdi.SourceInterface = *DecodeSourceInterface(eValue, eLen)
-			log.Println("pdi.SourceInterface: ", pdi.SourceInterface)
+			//log.Println("pdi.SourceInterface: ", pdi.SourceInterface)
 		case IETypeFTEID:
 			pdi.FTEID = *DecodeFTEID(eValue, eLen)
-			log.Println("pdi.FTEID: ", pdi.FTEID)
+			//log.Println("pdi.FTEID: ", pdi.FTEID)
 		case IETypeNetworkInstance:
 			pdi.NetworkInstance = *DecodeNetworkInstance(eValue, eLen)
-			log.Println("pdi.NetworkInstance: ", pdi.NetworkInstance)
+			//log.Println("pdi.NetworkInstance: ", pdi.NetworkInstance)
 		case IETypeQFI:
 			pdi.QFI = *DecodeQFI(eValue, eLen)
-			log.Println("pdi.QFI: ", pdi.QFI)
+			//log.Println("pdi.QFI: ", pdi.QFI)
+		case IETypeUEIPAddress:
+			pdi.UEIPAddress = *DecodeUEIPAddress(eValue, eLen)
 		default:
 			log.Println("pdi err: unknown tlv type", eType) //TODO::
 		}
 		cursor = cursor + eLen + 4
 	}
+	//log.Println("pdi: ", pdi)
 	return &pdi
 }
 

@@ -2,7 +2,6 @@ package elem
 
 import (
 	"bytes"
-	"log"
 )
 
 type FTEIDFlag byte
@@ -37,10 +36,7 @@ func DecodeFTEID(buf *bytes.Buffer, len uint16) *FTEID {
 	if f.Flag&0b00000100>>2 == 1 { //CH=1
 		f.ChooseID = getValue(buf, 1)[0]
 	} else {
-		log.Println("buf: ", buf)
 		f.TEID = getValue(buf, 4)
-		log.Println("buf: ", buf)
-		log.Println("TEID: ", f.TEID)
 		if f.Flag&0b00000001 == 1 { //V4=1
 			f.IPv4Addr = getValue(buf, 4)
 		}
@@ -51,6 +47,7 @@ func DecodeFTEID(buf *bytes.Buffer, len uint16) *FTEID {
 			f.ChooseID = getValue(buf, 1)[0]
 		}
 	}
+	//log.Println("FTEID: ", f)
 	return &f
 }
 
