@@ -17,7 +17,7 @@ func DecodeMBR(data []byte, len uint16) *MBR {
 }
 
 func EncodeMBR(m MBR) []byte {
-	return setValue(g.EType, g.ELength, m.ULMBR, m.DLMBR)
+	return setValue(m.EType, m.ELength, m.ULMBR, m.DLMBR)
 }
 
 //判断是否含有MBR
