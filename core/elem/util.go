@@ -9,7 +9,7 @@ import (
 func getValue(buf *bytes.Buffer, len uint16) []byte {
 	value := make([]byte, len)
 	if err := binary.Read(buf, binary.BigEndian, &value); err != nil {
-		log.Println(buf,value,len,err) //TODO::
+		log.Println(buf, value, len, err) //TODO::
 	}
 	return value
 }

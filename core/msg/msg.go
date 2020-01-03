@@ -41,7 +41,7 @@ func Parse(buf *bytes.Buffer) *Msg {
 		log.Println("err") //TODO::
 	}
 	m.Version = b >> 5
-	if b&0b00000010 == 1 {
+	if b&0b00000010>>1 == 1 {
 		m.MP = true
 	}
 	if b&0b00000001 == 1 {
