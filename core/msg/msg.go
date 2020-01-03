@@ -23,10 +23,17 @@ type Msg struct {
 	Cause             elem.Cause
 	NodeID            elem.NodeID
 	RecoveryTimeStamp elem.RecoveryTimeStamp
+	FSEID             elem.FSEID
+	PDNType           elem.PDNType
+	CreatePDR         elem.CreatePDR
+	CreateFAR         elem.CreateFAR
+	CreateURR         elem.CreateURR
+	CreateQER         elem.CreateQER
 }
 
 func Parse(buf *bytes.Buffer) *Msg {
 	var m Msg
+	//解析消息头
 	var b byte
 	if err := binary.Read(buf, binary.BigEndian, &b); err != nil {
 		log.Println("err") //TODO::
@@ -88,7 +95,6 @@ func Parse(buf *bytes.Buffer) *Msg {
 			m.NodeID = *elem.DecodeNodeID(eValue, eLen)
 		case elem.IETypeRecoveryTimeStamp:
 			m.RecoveryTimeStamp = *elem.DecodeRecoveryTimeStamp(eValue, eLen)
-
 		case elem.IETypeUPFunctionFeatures:
 			//TODO::
 
@@ -96,7 +102,18 @@ func Parse(buf *bytes.Buffer) *Msg {
 			//TODO::
 		case elem.IETypeUserPlaneIPResourceInformation:
 			//TODO::
-
+		case elem.IETypeFSEID:
+			m.FSEID = *elem.DecodeFSEID(eValue, eLen)
+		case elem.IETypePDNType:
+			m.PDNType = *elem.DecodePDNType(eValue, eLen)
+		case elem.IETypeCreatePDR:
+			m.CreatePDR = *elem.DecodeCreatePDR(eValue, eLen)
+		case elem.IETypeCreateFAR:
+			m.CreateFAR = *elem.DecodeCreateFAR(eValue, eLen)
+		case elem.IETypeCreateURR:
+			m.CreateURR = *elem.DecodeCreateURR(eValue, eLen)
+		case elem.IETypeCreateQER:
+			m.CreateQER = *elem.DecodeCreateQER(eValue, eLen)
 		default:
 			log.Println("err: unknown tlv type", eType)
 		}
