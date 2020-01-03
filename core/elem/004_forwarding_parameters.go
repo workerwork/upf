@@ -39,16 +39,16 @@ func DecodeForwardingParameters(buf *bytes.Buffer, len uint16) *ForwardingParame
 		}
 		eValue := bytes.NewBuffer(e)
 		switch eType {
-		case IETypeSourceInterface:
+		case IETypeTransportLevelMarking:
 			fps.TransportLevelMarking = *DecodeTransportLevelMarking(eValue, eLen)
-		case IETypeFTEID:
+		case IETypeDestinationInterface:
 			fps.DestinationInterface = *DecodeDestinationInterface(eValue, eLen)
 		case IETypeNetworkInstance:
 			fps.NetworkInstance = *DecodeNetworkInstance(eValue, eLen)
-		case IETypeQFI:
+		case IETypeOuterHeaderCreation:
 			fps.OuterHeaderCreation = *DecodeOuterHeaderCreation(eValue, eLen)
 		default:
-			log.Println("err: unknown tlv type", eType) //TODO::
+			log.Println("forwarding parameters err: unknown tlv type", eType) //TODO::
 		}
 		cursor = cursor + eLen + 4
 	}

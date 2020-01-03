@@ -83,15 +83,15 @@ func Parse(buf *bytes.Buffer) *Msg {
 			eLen  uint16
 		)
 		if err := binary.Read(buf, binary.BigEndian, &eType); err != nil {
-			log.Println("err") //TODO::
+			log.Println(err) //TODO::
 		}
 		if err := binary.Read(buf, binary.BigEndian, &eLen); err != nil {
-			log.Println("err") //TODO::
+			log.Println(err) //TODO::
 		}
 		e := make([]byte, eLen)
 		//eValue := *bytes.NewBuffer(make([]byte, eLen))
 		if err := binary.Read(buf, binary.BigEndian, e); err != nil {
-			log.Println("err") //TODO::
+			log.Println(err) //TODO::
 		}
 		eValue := bytes.NewBuffer(e)
 		switch eType {
@@ -119,7 +119,7 @@ func Parse(buf *bytes.Buffer) *Msg {
 		case elem.IETypeCreateQER:
 			m.CreateQER = *elem.DecodeCreateQER(eValue, eLen)
 		default:
-			log.Println("err: unknown tlv type", eType)
+			log.Println("msg err: unknown tlv type", eType)
 		}
 		cursor = cursor + eLen + 4
 	}
@@ -136,17 +136,17 @@ func (m *Msg) Pack() *bytes.Buffer {
 		b = b | 0b00000001
 	}
 	if err := binary.Write(buf, binary.BigEndian, b); err != nil {
-		log.Println("err") //TODO::
+		log.Println(err) //TODO::
 	}
 	if err := binary.Write(buf, binary.BigEndian, m.Type); err != nil {
-		log.Println("err") //TODO::
+		log.Println(err) //TODO::
 	}
 	if err := binary.Write(buf, binary.BigEndian, m.Length); err != nil {
-		log.Println("err") //TODO::
+		log.Println(err) //TODO::
 	}
 	if m.S {
 		if err := binary.Write(buf, binary.BigEndian, m.SEID); err != nil {
-			log.Println("err") //TODO::
+			log.Println(err) //TODO::
 		}
 	}
 	b3 := make([]byte, 3)
@@ -154,26 +154,26 @@ func (m *Msg) Pack() *bytes.Buffer {
 	b3[1] = byte((m.Sequence >> 8) & 0xFF)
 	b3[2] = byte(m.Sequence & 0xFF)
 	if err := binary.Write(buf, binary.BigEndian, b3); err != nil {
-		log.Println("err") //TODO::
+		log.Println(err) //TODO::
 	}
 	if m.MP {
 		if err := binary.Write(buf, binary.BigEndian, m.Priority<<4); err != nil {
-			log.Println("err") //TODO::
+			log.Println(err) //TODO::
 		}
 	} else {
 		if err := binary.Write(buf, binary.BigEndian, byte(0x00)); err != nil {
-			log.Println("err") //TODO::
+			log.Println(err) //TODO::
 		}
 	}
 	//TODO::判断具体的信元是否存在，如果存在则写入
 	if m.NodeID.EType != 0 {
 		if err := binary.Write(buf, binary.BigEndian, elem.EncodeNodeID(m.NodeID)); err != nil {
-			log.Println("err") //TODO::
+			log.Println(err) //TODO::
 		}
 	}
 	if m.RecoveryTimeStamp.EType != 0 {
 		if err := binary.Write(buf, binary.BigEndian, elem.EncodeRecoveryTimeStamp(m.RecoveryTimeStamp)); err != nil {
-			log.Println("err") //TODO::
+			log.Println(err) //TODO::
 		}
 	}
 	log.Println("*********response: ", m)

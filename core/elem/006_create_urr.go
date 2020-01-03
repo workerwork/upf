@@ -39,14 +39,16 @@ func DecodeCreateURR(buf *bytes.Buffer, len uint16) *CreateURR {
 		}
 		eValue := bytes.NewBuffer(e)
 		switch eType {
-		case IETypeForwardingParameters:
-			createURR.ReportingTriggers = *DecodeReportingTriggers(eValue, eLen)
-		case IETypeApplyAction:
+		case IETypeMeasurementMethod:
 			createURR.MeasurementMethod = *DecodeMeasurementMethod(eValue, eLen)
-		case IETypeFARID:
+		case IETypeMeasurementPeriod:
 			createURR.MeasurementPeriod = *DecodeMeasurementPeriod(eValue, eLen)
+		case IETypeReportingTriggers:
+			createURR.ReportingTriggers = *DecodeReportingTriggers(eValue, eLen)
+		case IETypeURRID:
+			createURR.URRID = *DecodeURRID(eValue, eLen)
 		default:
-			log.Println("err: unknown tlv type", eType) //TODO::
+			log.Println("create urr err: unknown tlv type", eType) //TODO::
 		}
 		cursor = cursor + eLen + 4
 	}

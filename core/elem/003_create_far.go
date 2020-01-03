@@ -45,7 +45,7 @@ func DecodeCreateFAR(buf *bytes.Buffer, len uint16) *CreateFAR {
 		case IETypeFARID:
 			createFAR.FARID = *DecodeFARID(eValue, eLen)
 		default:
-			log.Println("err: unknown tlv type", eType) //TODO::
+			log.Println(" create far err: unknown tlv type", eType) //TODO::
 		}
 		cursor = cursor + eLen + 4
 	}

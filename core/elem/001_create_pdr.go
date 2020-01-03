@@ -59,7 +59,7 @@ func DecodeCreatePDR(buf *bytes.Buffer, len uint16) *CreatePDR {
 		case IETypeQERID:
 			createPDR.QERIDs = append(createPDR.QERIDs, *DecodeQERID(eValue, eLen))
 		default:
-			log.Println("err: unknown tlv type", eType) //TODO::
+			log.Println("create pdr err: unknown tlv type", eType) //TODO::
 		}
 		cursor = cursor + eLen + 4
 	}

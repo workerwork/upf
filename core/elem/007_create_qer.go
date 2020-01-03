@@ -48,7 +48,7 @@ func DecodeCreateQER(buf *bytes.Buffer, len uint16) *CreateQER {
 		case IETypeQFI:
 			createQER.QFI = *DecodeQFI(eValue, eLen)
 		default:
-			log.Println("err: unknown tlv type", eType) //TODO::
+			log.Println("create qer err: unknown tlv type", eType) //TODO::
 		}
 		cursor = cursor + eLen + 4
 	}
