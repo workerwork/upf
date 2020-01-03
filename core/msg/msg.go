@@ -38,7 +38,7 @@ func Parse(buf *bytes.Buffer) *Msg {
 
 	var b byte
 	if err := binary.Read(buf, binary.BigEndian, &b); err != nil {
-		log.Println("err") //TODO::
+		log.Println(err) //TODO::
 	}
 	m.Version = b >> 5
 	if b&0b00000010>>1 == 1 {
@@ -48,28 +48,28 @@ func Parse(buf *bytes.Buffer) *Msg {
 		m.S = true
 	}
 	if err := binary.Read(buf, binary.BigEndian, &m.Type); err != nil {
-		log.Println("err") //TODO::
+		log.Println(err) //TODO::
 	}
 	if err := binary.Read(buf, binary.BigEndian, &m.Length); err != nil {
-		log.Println("err") //TODO::
+		log.Println(err) //TODO::
 	}
 	if m.S {
 		if err := binary.Read(buf, binary.LittleEndian, &m.SEID); err != nil {
-			log.Println("err") //TODO::
+			log.Println(err) //TODO::
 		}
 	}
 	var b12 uint16
 	if err := binary.Read(buf, binary.LittleEndian, &b12); err != nil {
-		log.Println("err") //TODO::
+		log.Println(err) //TODO::
 	}
 	var b3 uint8
 	if err := binary.Read(buf, binary.LittleEndian, &b3); err != nil {
-		log.Println("err") //TODO::
+		log.Println(err) //TODO::
 	}
 	m.Sequence = uint32(b12<<8) | uint32(b3)
 	var b4 byte
 	if err := binary.Read(buf, binary.BigEndian, &b4); err != nil {
-		log.Println("err") //TODO::
+		log.Println(err) //TODO::
 	}
 	if m.MP {
 		m.Priority = b4 >> 4
