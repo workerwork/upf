@@ -55,16 +55,20 @@ func DecodeForwardingParameters(buf *bytes.Buffer, len uint16) *ForwardingParame
 	return &fps
 }
 
-func EncodeForwardingParameters(fps ForwardingParameters) []byte {
-	ret := setValue(fps.EType, fps.ELength, fps.DestinationInterface) //DestinationInterface 为M信元
-	if HasNetworkInstance(fps.NetworkInstance) {
-		ret = setValue(ret, fps.NetworkInstance)
-	}
-	if HasTransportLevelMarking(fps.TransportLevelMarking) {
-		ret = setValue(ret, fps.TransportLevelMarking)
-	}
-	if HasOuterHeaderCreation(fps.OuterHeaderCreation) {
-		ret = setValue(ret, fps.OuterHeaderCreation)
+func EncodeForwardingParameters(fps ForwardingParameters) *bytes.Buffer {
+	ret := SetValue(fps.EType, fps.ELength)
+	switch {
+	case HasDestinationInterface(fps.DestinationInterface):	//M
+		SetValue(ret, fps.DestinationInterface)
+		fallthrough
+	case HasNetworkInstance(fps.NetworkInstance):
+		SetValue(ret, fps.NetworkInstance)
+		fallthrough
+	case HasTransportLevelMarking(fps.TransportLevelMarking):
+		SetValue(ret, fps.TransportLevelMarking)
+		fallthrough
+	case HasOuterHeaderCreation(fps.OuterHeaderCreation):
+		SetValue(ret, fps.OuterHeaderCreation)
 	}
 	return ret
 }
