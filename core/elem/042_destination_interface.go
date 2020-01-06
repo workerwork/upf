@@ -16,8 +16,8 @@ func DecodeDestinationInterface(buf *bytes.Buffer, len uint16) *DestinationInter
 	}
 }
 
-func EncodeDestinationInterface(d DestinationInterface) []byte {
-	return setValue(d.EType, d.ELength, d.Interface)
+func EncodeDestinationInterface(d DestinationInterface) *bytes.Buffer {
+	return SetValue(d.EType, d.ELength, d.Interface)
 }
 
 //判断是否含有DestinationInterface

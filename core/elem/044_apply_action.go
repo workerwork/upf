@@ -27,8 +27,8 @@ func DecodeApplyAction(buf *bytes.Buffer, len uint16) *ApplyAction {
 	}
 }
 
-func EncodeApplyAction(a ApplyAction) []byte {
-	return setValue(a.EType, a.ELength, a.Action)
+func EncodeApplyAction(a ApplyAction) *bytes.Buffer {
+	return SetValue(a.EType, a.ELength, a.Action)
 }
 
 //判断是否含有ApplyAction

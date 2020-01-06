@@ -77,7 +77,7 @@ func DecodeReportingTriggers(buf *bytes.Buffer, len uint16) *ReportingTriggers {
 	return &r
 }
 
-func EncodeReportingTriggers(r ReportingTriggers) []byte {
+func EncodeReportingTriggers(r ReportingTriggers) *bytes.Buffer {
 	var flag1, flag2 byte
 	switch {
 	case r.PERIO:
@@ -123,7 +123,7 @@ func EncodeReportingTriggers(r ReportingTriggers) []byte {
 	case r.EVEQU:
 		flag2 |= 0b00100000
 	}
-	return setValue(r.EType, r.ELength, flag1, flag2)
+	return SetValue(r.EType, r.ELength, flag1, flag2)
 }
 
 //判断是否含有ReportingTriggers
