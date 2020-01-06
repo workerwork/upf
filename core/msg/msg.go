@@ -35,8 +35,6 @@ type Msg struct {
 func Parse(buf *bytes.Buffer) *Msg {
 	var m Msg
 	//解析消息头
-	//b := elem.GetValue(buf, 1)[0]
-
 	var b byte
 	if err := binary.Read(buf, binary.BigEndian, &b); err != nil {
 		log.Println(err) //TODO::

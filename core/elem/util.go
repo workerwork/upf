@@ -13,18 +13,6 @@ func getValue(buf *bytes.Buffer, len uint16) []byte {
 	}
 	return value
 }
-
-/*
-func setValue(data ...interface{}) []byte {
-	buf := bytes.NewBuffer([]byte{})
-	for _, d := range data {
-		if err := binary.Write(buf, binary.BigEndian, d); err != nil {
-			log.Println(err) //TODO::
-		}
-	}
-	return buf.Bytes()
-}*/
-
 func SetValue(data ...interface{}) *bytes.Buffer {
 	buf := bytes.NewBuffer([]byte{})
 	for _, d := range data {
