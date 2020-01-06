@@ -14,6 +14,7 @@ func getValue(buf *bytes.Buffer, len uint16) []byte {
 	return value
 }
 
+/*
 func setValue(data ...interface{}) []byte {
 	buf := bytes.NewBuffer([]byte{})
 	for _, d := range data {
@@ -22,7 +23,7 @@ func setValue(data ...interface{}) []byte {
 		}
 	}
 	return buf.Bytes()
-}
+}*/
 
 func SetValue(data ...interface{}) *bytes.Buffer {
 	buf := bytes.NewBuffer([]byte{})

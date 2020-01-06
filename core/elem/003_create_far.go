@@ -52,10 +52,17 @@ func DecodeCreateFAR(buf *bytes.Buffer, len uint16) *CreateFAR {
 	return &createFAR
 }
 
-func EncodeCreateFAR(createFAR CreateFAR) []byte {
-	ret := setValue(createFAR.EType, createFAR.ELength, createFAR.ApplyAction, createFAR.FARID) //ApplyAction FARID 为M信元
-	if HasFARID(createFAR.FARID) {
-		ret = setValue(ret, createFAR.FARID)
+func EncodeCreateFAR(createFAR CreateFAR) *bytes.Buffer {
+	ret := SetValue(createFAR.EType, createFAR.ELength)
+	switch {
+	case HasApplyAction(createFAR.ApplyAction):	//M
+		SetValue(ret, createFAR.ApplyAction)
+		fallthrough
+	case HasFARID(createFAR.FARID):	//M
+		SetValue(ret, createFAR.FARID)
+		fallthrough
+	case HasForwardingParameters(createFAR.ForwardingParameters):
+		SetValue(ret, createFAR.ForwardingParameters)
 	}
 	return ret
 }
