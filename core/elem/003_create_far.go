@@ -55,10 +55,10 @@ func DecodeCreateFAR(buf *bytes.Buffer, len uint16) *CreateFAR {
 func EncodeCreateFAR(createFAR CreateFAR) *bytes.Buffer {
 	ret := SetValue(createFAR.EType, createFAR.ELength)
 	switch {
-	case HasApplyAction(createFAR.ApplyAction):	//M
+	case HasApplyAction(createFAR.ApplyAction): //M
 		SetValue(ret, createFAR.ApplyAction)
 		fallthrough
-	case HasFARID(createFAR.FARID):	//M
+	case HasFARID(createFAR.FARID): //M
 		SetValue(ret, createFAR.FARID)
 		fallthrough
 	case HasForwardingParameters(createFAR.ForwardingParameters):

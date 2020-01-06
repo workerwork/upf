@@ -55,10 +55,19 @@ func DecodeCreateURR(buf *bytes.Buffer, len uint16) *CreateURR {
 	return &createURR
 }
 
-func EncodeCreateURR(createURR CreateURR) []byte {
-	ret := setValue(createURR.EType, createURR.ELength, createURR.ReportingTriggers, createURR.MeasurementMethod, createURR.URRID) //ReportingTriggers MeasurementMethod URRID为M信元
-	if HasMeasurementPeriod(createURR.MeasurementPeriod) {
-		ret = setValue(ret, createURR.MeasurementPeriod)
+func EncodeCreateURR(createURR CreateURR) *bytes.Buffer {
+	ret := SetValue(createURR.EType, createURR.ELength)
+	switch {
+	case HasReportingTriggers(createURR.ReportingTriggers): //M
+		SetValue(ret, createURR.ReportingTriggers)
+		fallthrough
+	case HasMeasurementMethod(createURR.MeasurementMethod): //M
+		fallthrough
+	case HasURRID(createURR.URRID): //M
+		SetValue(ret, createURR.URRID)
+		fallthrough
+	case HasMeasurementPeriod(createURR.MeasurementPeriod):
+		SetValue(ret, createURR.MeasurementPeriod)
 	}
 	return ret
 }

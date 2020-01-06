@@ -58,7 +58,7 @@ func DecodeForwardingParameters(buf *bytes.Buffer, len uint16) *ForwardingParame
 func EncodeForwardingParameters(fps ForwardingParameters) *bytes.Buffer {
 	ret := SetValue(fps.EType, fps.ELength)
 	switch {
-	case HasDestinationInterface(fps.DestinationInterface):	//M
+	case HasDestinationInterface(fps.DestinationInterface): //M
 		SetValue(ret, fps.DestinationInterface)
 		fallthrough
 	case HasNetworkInstance(fps.NetworkInstance):
