@@ -55,13 +55,20 @@ func DecodeCreateQER(buf *bytes.Buffer, len uint16) *CreateQER {
 	return &createQER
 }
 
-func EncodeCreateQER(createQER CreateQER) []byte {
-	ret := setValue(createQER.EType, createQER.ELength, createQER.GateStatus, createQER.QERID) //GateStatus QERID为M信元
-	if HasMBR(createQER.MBR) {
-		ret = setValue(ret, createQER.MBR)
-	}
-	if HasQFI(createQER.QFI) {
-		ret = setValue(ret, createQER.QFI)
+func EncodeCreateQER(createQER CreateQER) *bytes.Buffer {
+	ret := SetValue(createQER.EType, createQER.ELength)
+	switch {
+	case HasGateStatus(createQER.GateStatus):	//M
+		SetValue(ret, createQER.GateStatus)
+		fallthrough
+	case HasQERID(createQER.QERID):	//M
+		SetValue(ret, createQER.QERID)
+		fallthrough
+	case HasMBR(createQER.MBR):
+		SetValue(ret, createQER.MBR)
+		fallthrough
+	case HasQFI(createQER.QFI):
+		SetValue(ret, createQER.QFI)
 	}
 	return ret
 }
