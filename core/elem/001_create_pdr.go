@@ -84,7 +84,7 @@ func EncodeCreatePDR(createPDR CreatePDR) []byte {
 }
 
 //判断是否含有CreatePDR
-func Has(createPDR CreatePDR) bool {
+func HasCreatePDR(createPDR CreatePDR) bool {
 	if createPDR.EType == 0 {
 		return false
 	}

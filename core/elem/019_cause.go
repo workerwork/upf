@@ -48,3 +48,11 @@ func DecodeCause(buf *bytes.Buffer, len uint16) *Cause {
 func EncodeCause(cause Cause) []byte {
 	return setValue(cause.EType, cause.ELength, cause.Cause)
 }
+
+//判断是否含有Cause
+func HasCause(c Cause) bool {
+	if c.EType == 0 {
+		return false
+	}
+	return true
+}

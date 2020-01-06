@@ -31,6 +31,7 @@ type Msg struct {
 	CreateQER         elem.CreateQER
 }
 
+//解析函数
 func Parse(buf *bytes.Buffer) *Msg {
 	var m Msg
 	//解析消息头
@@ -126,6 +127,7 @@ func Parse(buf *bytes.Buffer) *Msg {
 	return &m
 }
 
+//封装函数
 func (m *Msg) Pack() *bytes.Buffer {
 	buf := bytes.NewBuffer([]byte{})
 	b := m.Version << 5
@@ -165,16 +167,34 @@ func (m *Msg) Pack() *bytes.Buffer {
 			log.Println(err) //TODO::
 		}
 	}
-	//TODO::判断具体的信元是否存在，如果存在则写入
-	if m.NodeID.EType != 0 {
-		if err := binary.Write(buf, binary.BigEndian, elem.EncodeNodeID(m.NodeID)); err != nil {
-			log.Println(err) //TODO::
-		}
-	}
-	if m.RecoveryTimeStamp.EType != 0 {
-		if err := binary.Write(buf, binary.BigEndian, elem.EncodeRecoveryTimeStamp(m.RecoveryTimeStamp)); err != nil {
-			log.Println(err) //TODO::
-		}
+	//写入信元
+	switch {
+	case elem.HasCause(m.Cause):
+		elem.SetValue(buf, m.Cause)
+		fallthrough
+	case elem.HasNodeID(m.NodeID):
+		elem.SetValue(buf, m.NodeID)
+		fallthrough
+	case elem.HasRecoveryTimeStamp(m.RecoveryTimeStamp):
+		elem.SetValue(m.RecoveryTimeStamp)
+		fallthrough
+	case elem.HasFSEID(m.FSEID):
+		elem.SetValue(buf, m.FSEID)
+		fallthrough
+	case elem.HasPDNType(m.PDNType):
+		elem.SetValue(buf, m.PDNType)
+		fallthrough
+	case elem.HasCreatePDR(m.CreatePDR):
+		elem.SetValue(buf, m.CreatePDR)
+		fallthrough
+	case elem.HasCreateFAR(m.CreateFAR):
+		elem.SetValue(buf, m.CreateFAR)
+		fallthrough
+	case elem.HasCreateURR(m.CreateURR):
+		elem.SetValue(buf, m.CreateURR)
+		fallthrough
+	case elem.HasCreateQER(m.CreateQER):
+		elem.SetValue(buf, m.CreateQER)
 	}
 	log.Println("*********response: ", m)
 	log.Printf("*********response: %0x\n", buf.Bytes())
