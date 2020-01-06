@@ -35,8 +35,8 @@ func DecodeNodeID(buf *bytes.Buffer, len uint16) *NodeID {
 	}
 }
 
-func EncodeNodeID(n NodeID) []byte {
-	return setValue(n.EType, n.ELength, n.NodeIDType, n.NodeID)
+func EncodeNodeID(n NodeID) *bytes.Buffer {
+	return SetValue(n.EType, n.ELength, n.NodeIDType, n.NodeID)
 }
 
 //判断是否含有NodeID

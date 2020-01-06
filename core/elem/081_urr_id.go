@@ -16,8 +16,8 @@ func DecodeURRID(buf *bytes.Buffer, len uint16) *URRID {
 	}
 }
 
-func EncodeURRID(u URRID) []byte {
-	return setValue(u.EType, u.ELength, u.URRID)
+func EncodeURRID(u URRID) *bytes.Buffer {
+	return SetValue(u.EType, u.ELength, u.URRID)
 }
 
 //判断是否含有URRID

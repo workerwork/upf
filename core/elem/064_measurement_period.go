@@ -16,8 +16,8 @@ func DecodeMeasurementPeriod(buf *bytes.Buffer, len uint16) *MeasurementPeriod {
 	}
 }
 
-func EncodeMeasurementPeriod(m MeasurementPeriod) []byte {
-	return setValue(m.EType, m.ELength, m.MeasurementPeriod)
+func EncodeMeasurementPeriod(m MeasurementPeriod) *bytes.Buffer {
+	return SetValue(m.EType, m.ELength, m.MeasurementPeriod)
 }
 
 //判断是否含有MeasurementPeriod

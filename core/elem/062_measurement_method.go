@@ -29,7 +29,7 @@ func DecodeMeasurementMethod(buf *bytes.Buffer, len uint16) *MeasurementMethod {
 	return &m
 }
 
-func EncodeMeasurementMethod(m MeasurementMethod) []byte {
+func EncodeMeasurementMethod(m MeasurementMethod) *bytes.Buffer {
 	var flag byte
 	switch {
 	case m.DURAT:
@@ -41,7 +41,7 @@ func EncodeMeasurementMethod(m MeasurementMethod) []byte {
 	case m.EVENT:
 		flag |= 0b00000100
 	}
-	return setValue(m.EType, m.ELength, flag)
+	return SetValue(m.EType, m.ELength, flag)
 }
 
 //判断是否含有MeasurementMethod
