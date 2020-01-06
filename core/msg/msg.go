@@ -3,7 +3,7 @@ package msg
 import (
 	"bytes"
 	"encoding/binary"
-	"github.com/workerwork/upf/core/elem"
+	. "github.com/workerwork/upf/core/elem"
 	"log"
 )
 
@@ -20,15 +20,15 @@ type Head struct {
 
 type Msg struct {
 	Head
-	Cause             elem.Cause
-	NodeID            elem.NodeID
-	RecoveryTimeStamp elem.RecoveryTimeStamp
-	FSEID             elem.FSEID
-	PDNType           elem.PDNType
-	CreatePDR         elem.CreatePDR
-	CreateFAR         elem.CreateFAR
-	CreateURR         elem.CreateURR
-	CreateQER         elem.CreateQER
+	Cause             Cause
+	NodeID            NodeID
+	RecoveryTimeStamp RecoveryTimeStamp
+	FSEID             FSEID
+	PDNType           PDNType
+	CreatePDR         CreatePDR
+	CreateFAR         CreateFAR
+	CreateURR         CreateURR
+	CreateQER         CreateQER
 }
 
 //解析函数
@@ -78,7 +78,7 @@ func Parse(buf *bytes.Buffer) *Msg {
 	dataLen := getDataLen(&m)
 	for cursor < dataLen {
 		var (
-			eType elem.IEType
+			eType IEType
 			eLen  uint16
 		)
 		if err := binary.Read(buf, binary.BigEndian, &eType); err != nil {
@@ -94,31 +94,31 @@ func Parse(buf *bytes.Buffer) *Msg {
 		}
 		eValue := bytes.NewBuffer(e)
 		switch eType {
-		case elem.IETypeNodeID:
-			m.NodeID = *elem.DecodeNodeID(eValue, eLen)
-		case elem.IETypeRecoveryTimeStamp:
-			m.RecoveryTimeStamp = *elem.DecodeRecoveryTimeStamp(eValue, eLen)
-		case elem.IETypeUPFunctionFeatures:
+		case IETypeNodeID:
+			m.NodeID = *DecodeNodeID(eValue, eLen)
+		case IETypeRecoveryTimeStamp:
+			m.RecoveryTimeStamp = *DecodeRecoveryTimeStamp(eValue, eLen)
+		case IETypeUPFunctionFeatures:
 			log.Println("IETypeUPFunctionFeatures")
 			//TODO::
-		case elem.IETypeCPFunctionFeatures:
+		case IETypeCPFunctionFeatures:
 			log.Println("IETypeCPFunctionFeatures")
 			//TODO::
-		case elem.IETypeUserPlaneIPResourceInformation:
+		case IETypeUserPlaneIPResourceInformation:
 			log.Println("IETypeUserPlaneIPResourceInformation")
 			//TODO::
-		case elem.IETypeFSEID:
-			m.FSEID = *elem.DecodeFSEID(eValue, eLen)
-		case elem.IETypePDNType:
-			m.PDNType = *elem.DecodePDNType(eValue, eLen)
-		case elem.IETypeCreatePDR:
-			m.CreatePDR = *elem.DecodeCreatePDR(eValue, eLen)
-		case elem.IETypeCreateFAR:
-			m.CreateFAR = *elem.DecodeCreateFAR(eValue, eLen)
-		case elem.IETypeCreateURR:
-			m.CreateURR = *elem.DecodeCreateURR(eValue, eLen)
-		case elem.IETypeCreateQER:
-			m.CreateQER = *elem.DecodeCreateQER(eValue, eLen)
+		case IETypeFSEID:
+			m.FSEID = *DecodeFSEID(eValue, eLen)
+		case IETypePDNType:
+			m.PDNType = *DecodePDNType(eValue, eLen)
+		case IETypeCreatePDR:
+			m.CreatePDR = *DecodeCreatePDR(eValue, eLen)
+		case IETypeCreateFAR:
+			m.CreateFAR = *DecodeCreateFAR(eValue, eLen)
+		case IETypeCreateURR:
+			m.CreateURR = *DecodeCreateURR(eValue, eLen)
+		case IETypeCreateQER:
+			m.CreateQER = *DecodeCreateQER(eValue, eLen)
 		default:
 			log.Println("msg err: unknown tlv type", eType)
 		}
@@ -170,32 +170,32 @@ func (m *Msg) Pack() *bytes.Buffer {
 	//写入信元
 	data := buf.Bytes()
 	switch {
-	case elem.HasCause(m.Cause):
-		elem.SetValue(data, elem.EncodeCause(m.Cause))
+	case HasCause(m.Cause):
+		SetValue(data, EncodeCause(m.Cause))
 		fallthrough
-	case elem.HasNodeID(m.NodeID):
-		elem.SetValue(data, elem.EncodeNodeID(m.NodeID))
+	case HasNodeID(m.NodeID):
+		SetValue(data, EncodeNodeID(m.NodeID))
 		fallthrough
-	case elem.HasRecoveryTimeStamp(m.RecoveryTimeStamp):
-		elem.SetValue(elem.EncodeRecoveryTimeStamp(m.RecoveryTimeStamp))
+	case HasRecoveryTimeStamp(m.RecoveryTimeStamp):
+		SetValue(data, EncodeRecoveryTimeStamp(m.RecoveryTimeStamp))
 		fallthrough
-	case elem.HasFSEID(m.FSEID):
-		elem.SetValue(data, elem.EncodeFSEID(m.FSEID))
+	case HasFSEID(m.FSEID):
+		SetValue(data, EncodeFSEID(m.FSEID))
 		fallthrough
-	case elem.HasPDNType(m.PDNType):
-		elem.SetValue(data, elem.EncodePDNType(m.PDNType))
+	case HasPDNType(m.PDNType):
+		SetValue(data, EncodePDNType(m.PDNType))
 		fallthrough
-	case elem.HasCreatePDR(m.CreatePDR):
-		elem.SetValue(data, elem.EncodeCreatePDR(m.CreatePDR))
+	case HasCreatePDR(m.CreatePDR):
+		SetValue(data, EncodeCreatePDR(m.CreatePDR))
 		fallthrough
-	case elem.HasCreateFAR(m.CreateFAR):
-		elem.SetValue(data, elem.EncodeCreateFAR(m.CreateFAR))
+	case HasCreateFAR(m.CreateFAR):
+		SetValue(data, EncodeCreateFAR(m.CreateFAR))
 		fallthrough
-	case elem.HasCreateURR(m.CreateURR):
-		elem.SetValue(data, elem.EncodeCreateURR(m.CreateURR))
+	case HasCreateURR(m.CreateURR):
+		SetValue(data, EncodeCreateURR(m.CreateURR))
 		fallthrough
-	case elem.HasCreateQER(m.CreateQER):
-		elem.SetValue(data, elem.EncodeCreateQER(m.CreateQER))
+	case HasCreateQER(m.CreateQER):
+		SetValue(data, EncodeCreateQER(m.CreateQER))
 	}
 	log.Println("*********response: ", m)
 	log.Printf("*********response: %0x\n", buf.Bytes())
