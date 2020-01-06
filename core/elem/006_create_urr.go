@@ -59,15 +59,16 @@ func EncodeCreateURR(createURR CreateURR) []byte {
 	ret := SetValue(createURR.EType, createURR.ELength)
 	switch {
 	case HasReportingTriggers(createURR.ReportingTriggers): //M
-		SetValue(ret, createURR.ReportingTriggers)
+		SetValue(ret, EncodeReportingTriggers(createURR.ReportingTriggers))
 		fallthrough
 	case HasMeasurementMethod(createURR.MeasurementMethod): //M
+		SetValue(ret, EncodeMeasurementMethod(createURR.MeasurementMethod))
 		fallthrough
 	case HasURRID(createURR.URRID): //M
-		SetValue(ret, createURR.URRID)
+		SetValue(ret, EncodeURRID(createURR.URRID))
 		fallthrough
 	case HasMeasurementPeriod(createURR.MeasurementPeriod):
-		SetValue(ret, createURR.MeasurementPeriod)
+		SetValue(ret, EncodeMeasurementPeriod(createURR.MeasurementPeriod))
 	}
 	return ret
 }

@@ -59,16 +59,16 @@ func EncodeForwardingParameters(fps ForwardingParameters) []byte {
 	ret := SetValue(fps.EType, fps.ELength)
 	switch {
 	case HasDestinationInterface(fps.DestinationInterface): //M
-		SetValue(ret, fps.DestinationInterface)
+		SetValue(ret, EncodeDestinationInterface(fps.DestinationInterface))
 		fallthrough
 	case HasNetworkInstance(fps.NetworkInstance):
-		SetValue(ret, fps.NetworkInstance)
+		SetValue(ret, EncodeNetworkInstance(fps.NetworkInstance))
 		fallthrough
 	case HasTransportLevelMarking(fps.TransportLevelMarking):
-		SetValue(ret, fps.TransportLevelMarking)
+		SetValue(ret, EncodeTransportLevelMarking(fps.TransportLevelMarking))
 		fallthrough
 	case HasOuterHeaderCreation(fps.OuterHeaderCreation):
-		SetValue(ret, fps.OuterHeaderCreation)
+		SetValue(ret, EncodeOuterHeaderCreation(fps.OuterHeaderCreation))
 	}
 	return ret
 }

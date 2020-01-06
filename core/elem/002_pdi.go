@@ -62,16 +62,16 @@ func EncodePDI(pdi PDI) []byte {
 	ret := SetValue(pdi.EType, pdi.ELength)
 	switch {
 	case HasSourceInterface(pdi.SourceInterface): //M
-		SetValue(ret, pdi.SourceInterface)
+		SetValue(ret, EncodeSourceInterface(pdi.SourceInterface))
 		fallthrough
 	case HasFTEID(pdi.FTEID):
-		SetValue(ret, pdi.FTEID)
+		SetValue(ret, EncodeFTEID(pdi.FTEID))
 		fallthrough
 	case HasNetworkInstance(pdi.NetworkInstance):
-		SetValue(ret, pdi.NetworkInstance)
+		SetValue(ret, EncodeNetworkInstance(pdi.NetworkInstance))
 		fallthrough
 	case HasQFI(pdi.QFI):
-		SetValue(ret, pdi.QFI)
+		SetValue(ret, EncodeQFI(pdi.QFI))
 	}
 	return ret
 }

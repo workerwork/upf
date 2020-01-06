@@ -56,13 +56,13 @@ func EncodeCreateFAR(createFAR CreateFAR) []byte {
 	ret := SetValue(createFAR.EType, createFAR.ELength)
 	switch {
 	case HasApplyAction(createFAR.ApplyAction): //M
-		SetValue(ret, createFAR.ApplyAction)
+		SetValue(ret, EncodeApplyAction(createFAR.ApplyAction))
 		fallthrough
 	case HasFARID(createFAR.FARID): //M
-		SetValue(ret, createFAR.FARID)
+		SetValue(ret, EncodeFARID(createFAR.FARID))
 		fallthrough
 	case HasForwardingParameters(createFAR.ForwardingParameters):
-		SetValue(ret, createFAR.ForwardingParameters)
+		SetValue(ret, EncodeForwardingParameters(createFAR.ForwardingParameters))
 	}
 	return ret
 }

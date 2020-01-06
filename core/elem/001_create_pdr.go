@@ -70,28 +70,28 @@ func EncodeCreatePDR(createPDR CreatePDR) []byte {
 	ret := SetValue(createPDR.EType, createPDR.ELength)
 	switch {
 	case HasPDI(createPDR.PDI): //M
-		SetValue(ret, createPDR.PDI)
+		SetValue(ret, EncodePDI(createPDR.PDI))
 		fallthrough
 	case HasPrecedence(createPDR.Precedence): //M
-		SetValue(ret, createPDR.Precedence)
+		SetValue(ret, EncodePrecedence(createPDR.Precedence))
 		fallthrough
 	case HasPDRID(createPDR.PDRID): //M
-		SetValue(ret, createPDR.PDRID)
+		SetValue(ret, EncodePDRID(createPDR.PDRID))
 		fallthrough
 	case HasOuterHeaderRemoval(createPDR.OuterHeaderRemoval):
-		ret = SetValue(ret, createPDR.OuterHeaderRemoval)
+		ret = SetValue(ret, EncodeOuterHeaderRemoval(createPDR.OuterHeaderRemoval))
 		fallthrough
 	case HasFARID(createPDR.FARID):
-		ret = SetValue(ret, createPDR.FARID)
+		ret = SetValue(ret, EncodeFARID(createPDR.FARID))
 	}
 	for _, urrID := range createPDR.URRIDs {
 		if HasURRID(urrID) {
-			ret = SetValue(ret, urrID)
+			ret = SetValue(ret, EncodeURRID(urrID))
 		}
 	}
 	for _, qerID := range createPDR.QERIDs {
 		if HasQERID(qerID) {
-			ret = SetValue(ret, qerID)
+			ret = SetValue(ret, EncodeQERID(qerID))
 		}
 	}
 	return ret

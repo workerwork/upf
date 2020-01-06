@@ -59,16 +59,16 @@ func EncodeCreateQER(createQER CreateQER) []byte {
 	ret := SetValue(createQER.EType, createQER.ELength)
 	switch {
 	case HasGateStatus(createQER.GateStatus): //M
-		SetValue(ret, createQER.GateStatus)
+		SetValue(ret, EncodeGateStatus(createQER.GateStatus))
 		fallthrough
 	case HasQERID(createQER.QERID): //M
-		SetValue(ret, createQER.QERID)
+		SetValue(ret, EncodeQERID(createQER.QERID))
 		fallthrough
 	case HasMBR(createQER.MBR):
-		SetValue(ret, createQER.MBR)
+		SetValue(ret, EncodeMBR(createQER.MBR))
 		fallthrough
 	case HasQFI(createQER.QFI):
-		SetValue(ret, createQER.QFI)
+		SetValue(ret, EncodeQFI(createQER.QFI))
 	}
 	return ret
 }
