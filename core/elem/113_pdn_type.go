@@ -27,7 +27,7 @@ func DecodePDNType(buf *bytes.Buffer, len uint16) *PDNType {
 	}
 }
 
-func EncodePDNType(p PDNType) *bytes.Buffer {
+func EncodePDNType(p PDNType) []byte {
 	return SetValue(p.EType, p.ELength, p.PDNType)
 }
 

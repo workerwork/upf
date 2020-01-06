@@ -55,7 +55,7 @@ func DecodeCreateURR(buf *bytes.Buffer, len uint16) *CreateURR {
 	return &createURR
 }
 
-func EncodeCreateURR(createURR CreateURR) *bytes.Buffer {
+func EncodeCreateURR(createURR CreateURR) []byte {
 	ret := SetValue(createURR.EType, createURR.ELength)
 	switch {
 	case HasReportingTriggers(createURR.ReportingTriggers): //M

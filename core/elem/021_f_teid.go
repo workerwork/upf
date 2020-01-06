@@ -51,7 +51,7 @@ func DecodeFTEID(buf *bytes.Buffer, len uint16) *FTEID {
 	return &f
 }
 
-func EncodeFTEID(f FTEID) *bytes.Buffer {
+func EncodeFTEID(f FTEID) []byte {
 	ret := SetValue(f.EType, f.ELength, f.Flag, f.TEID, f.IPv4Addr, f.IPv6Addr)
 	if f.Flag&0b00000100>>2 == 0 && f.Flag&0b00001000>>3 == 1 {
 		SetValue(ret, f.ChooseID)

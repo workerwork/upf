@@ -99,11 +99,13 @@ func Parse(buf *bytes.Buffer) *Msg {
 		case elem.IETypeRecoveryTimeStamp:
 			m.RecoveryTimeStamp = *elem.DecodeRecoveryTimeStamp(eValue, eLen)
 		case elem.IETypeUPFunctionFeatures:
+			log.Println("IETypeUPFunctionFeatures")
 			//TODO::
-
 		case elem.IETypeCPFunctionFeatures:
+			log.Println("IETypeCPFunctionFeatures")
 			//TODO::
 		case elem.IETypeUserPlaneIPResourceInformation:
+			log.Println("IETypeUserPlaneIPResourceInformation")
 			//TODO::
 		case elem.IETypeFSEID:
 			m.FSEID = *elem.DecodeFSEID(eValue, eLen)
@@ -166,35 +168,36 @@ func (m *Msg) Pack() *bytes.Buffer {
 		}
 	}
 	//写入信元
+	data := buf.Bytes()
 	switch {
 	case elem.HasCause(m.Cause):
-		elem.SetValue(buf, m.Cause)
+		elem.SetValue(data, elem.EncodeCause(m.Cause))
 		fallthrough
 	case elem.HasNodeID(m.NodeID):
-		elem.SetValue(buf, m.NodeID)
+		elem.SetValue(data, elem.EncodeNodeID(m.NodeID))
 		fallthrough
 	case elem.HasRecoveryTimeStamp(m.RecoveryTimeStamp):
-		elem.SetValue(m.RecoveryTimeStamp)
+		elem.SetValue(elem.EncodeRecoveryTimeStamp(m.RecoveryTimeStamp))
 		fallthrough
 	case elem.HasFSEID(m.FSEID):
-		elem.SetValue(buf, m.FSEID)
+		elem.SetValue(data, elem.EncodeFSEID(m.FSEID))
 		fallthrough
 	case elem.HasPDNType(m.PDNType):
-		elem.SetValue(buf, m.PDNType)
+		elem.SetValue(data, elem.EncodePDNType(m.PDNType))
 		fallthrough
 	case elem.HasCreatePDR(m.CreatePDR):
-		elem.SetValue(buf, m.CreatePDR)
+		elem.SetValue(data, elem.EncodeCreatePDR(m.CreatePDR))
 		fallthrough
 	case elem.HasCreateFAR(m.CreateFAR):
-		elem.SetValue(buf, m.CreateFAR)
+		elem.SetValue(data, elem.EncodeCreateFAR(m.CreateFAR))
 		fallthrough
 	case elem.HasCreateURR(m.CreateURR):
-		elem.SetValue(buf, m.CreateURR)
+		elem.SetValue(data, elem.EncodeCreateURR(m.CreateURR))
 		fallthrough
 	case elem.HasCreateQER(m.CreateQER):
-		elem.SetValue(buf, m.CreateQER)
+		elem.SetValue(data, elem.EncodeCreateQER(m.CreateQER))
 	}
 	log.Println("*********response: ", m)
 	log.Printf("*********response: %0x\n", buf.Bytes())
-	return buf
+	return bytes.NewBuffer(data)
 }

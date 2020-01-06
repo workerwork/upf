@@ -16,7 +16,7 @@ func DecodeNetworkInstance(buf *bytes.Buffer, len uint16) *NetworkInstance {
 	}
 }
 
-func EncodeNetworkInstance(n NetworkInstance) *bytes.Buffer {
+func EncodeNetworkInstance(n NetworkInstance) []byte {
 	return SetValue(n.EType, n.ELength, n.NetworkInstance)
 }
 

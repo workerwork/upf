@@ -18,7 +18,7 @@ func DecodeMBR(buf *bytes.Buffer, len uint16) *MBR {
 	}
 }
 
-func EncodeMBR(m MBR) *bytes.Buffer {
+func EncodeMBR(m MBR) []byte {
 	return SetValue(m.EType, m.ELength, m.ULMBR, m.DLMBR)
 }
 

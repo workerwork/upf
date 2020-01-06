@@ -24,7 +24,7 @@ func DecodePDRID(buf *bytes.Buffer, len uint16) *PDRID {
 	}
 }
 
-func EncodePDRID(p PDRID) *bytes.Buffer {
+func EncodePDRID(p PDRID) []byte {
 	return SetValue(p.EType, p.ELength, p.RuleID)
 }
 

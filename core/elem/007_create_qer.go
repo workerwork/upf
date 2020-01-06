@@ -55,7 +55,7 @@ func DecodeCreateQER(buf *bytes.Buffer, len uint16) *CreateQER {
 	return &createQER
 }
 
-func EncodeCreateQER(createQER CreateQER) *bytes.Buffer {
+func EncodeCreateQER(createQER CreateQER) []byte {
 	ret := SetValue(createQER.EType, createQER.ELength)
 	switch {
 	case HasGateStatus(createQER.GateStatus): //M

@@ -16,7 +16,7 @@ func DecodeQFI(buf *bytes.Buffer, len uint16) *QFI {
 	}
 }
 
-func EncodeQFI(q QFI) *bytes.Buffer {
+func EncodeQFI(q QFI) []byte {
 	return SetValue(q.EType, q.ELength, q.QFI)
 }
 

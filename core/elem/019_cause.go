@@ -45,7 +45,7 @@ func DecodeCause(buf *bytes.Buffer, len uint16) *Cause {
 	}
 }
 
-func EncodeCause(cause Cause) *bytes.Buffer {
+func EncodeCause(cause Cause) []byte {
 	return SetValue(cause.EType, cause.ELength, cause.Cause)
 }
 

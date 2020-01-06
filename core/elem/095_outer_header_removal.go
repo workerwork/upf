@@ -21,7 +21,7 @@ func DecodeOuterHeaderRemoval(buf *bytes.Buffer, len uint16) *OuterHeaderRemoval
 	return &o
 }
 
-func EncodeOuterHeaderRemoval(o OuterHeaderRemoval) *bytes.Buffer {
+func EncodeOuterHeaderRemoval(o OuterHeaderRemoval) []byte {
 	ret := SetValue(o.EType, o.ELength, o.OuterHeaderRemovalDescription)
 	if o.GTPUExtensionHeaderDeletion != 0 { //TODO::不严谨
 		SetValue(ret, o.GTPUExtensionHeaderDeletion)

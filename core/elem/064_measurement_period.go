@@ -16,7 +16,7 @@ func DecodeMeasurementPeriod(buf *bytes.Buffer, len uint16) *MeasurementPeriod {
 	}
 }
 
-func EncodeMeasurementPeriod(m MeasurementPeriod) *bytes.Buffer {
+func EncodeMeasurementPeriod(m MeasurementPeriod) []byte {
 	return SetValue(m.EType, m.ELength, m.MeasurementPeriod)
 }
 

@@ -38,7 +38,7 @@ func DecodeFSEID(buf *bytes.Buffer, len uint16) *FSEID {
 	return &f
 }
 
-func EncodeFSEID(f FSEID) *bytes.Buffer {
+func EncodeFSEID(f FSEID) []byte {
 	return SetValue(f.EType, f.ELength, f.Flag, f.SEID, f.IPv4Addr, f.IPv6Addr)
 	/*
 		ret := SetValue(f.EType, f.ELength, f.Flag, f.SEID)

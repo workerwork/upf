@@ -27,7 +27,7 @@ func DecodeApplyAction(buf *bytes.Buffer, len uint16) *ApplyAction {
 	}
 }
 
-func EncodeApplyAction(a ApplyAction) *bytes.Buffer {
+func EncodeApplyAction(a ApplyAction) []byte {
 	return SetValue(a.EType, a.ELength, a.Action)
 }
 

@@ -52,7 +52,7 @@ func DecodeCreateFAR(buf *bytes.Buffer, len uint16) *CreateFAR {
 	return &createFAR
 }
 
-func EncodeCreateFAR(createFAR CreateFAR) *bytes.Buffer {
+func EncodeCreateFAR(createFAR CreateFAR) []byte {
 	ret := SetValue(createFAR.EType, createFAR.ELength)
 	switch {
 	case HasApplyAction(createFAR.ApplyAction): //M

@@ -66,7 +66,7 @@ func DecodeCreatePDR(buf *bytes.Buffer, len uint16) *CreatePDR {
 	return &createPDR
 }
 
-func EncodeCreatePDR(createPDR CreatePDR) *bytes.Buffer {
+func EncodeCreatePDR(createPDR CreatePDR) []byte {
 	ret := SetValue(createPDR.EType, createPDR.ELength)
 	switch {
 	case HasPDI(createPDR.PDI): //M

@@ -16,7 +16,7 @@ func DecodeQERID(buf *bytes.Buffer, len uint16) *QERID {
 	}
 }
 
-func EncodeQERID(q QERID) *bytes.Buffer {
+func EncodeQERID(q QERID) []byte {
 	return SetValue(q.EType, q.ELength, q.QERID)
 }
 

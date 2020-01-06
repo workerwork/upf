@@ -24,7 +24,7 @@ func DecodeRecoveryTimeStamp(buf *bytes.Buffer, len uint16) *RecoveryTimeStamp {
 	}
 }
 
-func EncodeRecoveryTimeStamp(r RecoveryTimeStamp) *bytes.Buffer {
+func EncodeRecoveryTimeStamp(r RecoveryTimeStamp) []byte {
 	return SetValue(r.EType, r.ELength, r.RecoveryTimeStamp)
 }
 

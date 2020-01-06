@@ -77,7 +77,7 @@ func DecodeReportingTriggers(buf *bytes.Buffer, len uint16) *ReportingTriggers {
 	return &r
 }
 
-func EncodeReportingTriggers(r ReportingTriggers) *bytes.Buffer {
+func EncodeReportingTriggers(r ReportingTriggers) []byte {
 	var flag1, flag2 byte
 	switch {
 	case r.PERIO:

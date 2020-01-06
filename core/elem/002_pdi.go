@@ -58,7 +58,7 @@ func DecodePDI(buf *bytes.Buffer, len uint16) *PDI {
 	return &pdi
 }
 
-func EncodePDI(pdi PDI) *bytes.Buffer {
+func EncodePDI(pdi PDI) []byte {
 	ret := SetValue(pdi.EType, pdi.ELength)
 	switch {
 	case HasSourceInterface(pdi.SourceInterface): //M

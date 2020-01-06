@@ -29,7 +29,7 @@ func DecodeMeasurementMethod(buf *bytes.Buffer, len uint16) *MeasurementMethod {
 	return &m
 }
 
-func EncodeMeasurementMethod(m MeasurementMethod) *bytes.Buffer {
+func EncodeMeasurementMethod(m MeasurementMethod) []byte {
 	var flag byte
 	switch {
 	case m.DURAT:

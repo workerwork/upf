@@ -38,7 +38,7 @@ func DecodeUEIPAddress(buf *bytes.Buffer, len uint16) *UEIPAddress {
 	return &u
 }
 
-func EncodeUEIPAddress(u UEIPAddress) *bytes.Buffer {
+func EncodeUEIPAddress(u UEIPAddress) []byte {
 	ret := SetValue(u.EType, u.ELength, u.Flag, u.IPv4Addr, u.IPv6Addr)
 	if u.Flag&0b00010000>>4 == 0 && u.Flag&0b00001000>>3 == 1 {
 		SetValue(ret, u.IPv6Prefix)
