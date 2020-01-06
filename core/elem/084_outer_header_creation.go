@@ -15,19 +15,32 @@ type OuterHeaderCreation struct {
 }
 
 func DecodeOuterHeaderCreation(buf *bytes.Buffer, len uint16) *OuterHeaderCreation {
-	return &OuterHeaderCreation{
+	o := OuterHeaderCreation{
 		EType:                          IETypeOuterHeaderCreation,
 		ELength:                        len,
 		OuterHeaderCreationDescription: getValue(buf, 2),
-		TEID:                           getValue(buf, 4),
-		IPv4Addr:                       getValue(buf, 4),
-		IPv6Addr:                       getValue(buf, 16),
-		//TODO::
 	}
+	flag := o.OuterHeaderCreationDescription[1]
+	if flag&0b00000001 == 1 || flag&0b00000010>>1 == 1 {
+		o.TEID = getValue(buf, 4)
+	}
+	if flag&0b00000001 == 1 || flag&0b00000100>>2 == 1 || flag&0b00010000>>4 == 1 {
+		o.IPv4Addr = getValue(buf, 4)
+	}
+	if flag&0b00000010>>1 == 1 || flag&0b00001000>>3 == 1 || flag&0b00100000>>5 == 1 {
+		o.IPv6Addr = getValue(buf, 16)
+	}
+	if flag&0b01000000>>6 == 1 {
+		o.CTAG = getValue(buf, 3)
+	}
+	if flag&0b10000000>>7 == 1 {
+		o.STAG = getValue(buf, 3)
+	}
+	return &o
 }
 
-func EncodeOuterHeaderCreation(pdrID OuterHeaderCreation) []byte {
-	return []byte{}
+func EncodeOuterHeaderCreation(o OuterHeaderCreation) []byte {
+	return setValue(o.EType, o.ELength, o.OuterHeaderCreationDescription, o.TEID, o.IPv4Addr, o.IPv6Addr, o.CTAG, o.STAG)
 }
 
 //判断是否含有OuterHeaderCreation
