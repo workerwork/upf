@@ -26,11 +26,7 @@ func DecodeSourceInterface(buf *bytes.Buffer, len uint16) *SourceInterface {
 }
 
 func EncodeSourceInterface(s SourceInterface) *bytes.Buffer {
-	ret := SetValue(s.EType, s.ELength)
-	if HasSourceInterface(s) {
-		SetValue(ret, s.Interface)
-	}
-	return ret
+	return SetValue(s.EType, s.ELength, s.Interface)
 }
 
 //判断是否含有SourceInterface

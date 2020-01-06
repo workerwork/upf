@@ -16,8 +16,8 @@ func DecodeNetworkInstance(buf *bytes.Buffer, len uint16) *NetworkInstance {
 	}
 }
 
-func EncodeNetworkInstance(n NetworkInstance) []byte {
-	return setValue(n.EType, n.ELength, n.NetworkInstance)
+func EncodeNetworkInstance(n NetworkInstance) *bytes.Buffer {
+	return SetValue(n.EType, n.ELength, n.NetworkInstance)
 }
 
 //判断是否含有NetworkInstance
