@@ -24,8 +24,8 @@ func DecodePDRID(buf *bytes.Buffer, len uint16) *PDRID {
 	}
 }
 
-func EncodePDRID(p PDRID) []byte {
-	return setValue(p.EType, p.ELength, p.RuleID)
+func EncodePDRID(p PDRID) *bytes.Buffer {
+	return SetValue(p.EType, p.ELength, p.RuleID)
 }
 
 //判断是否含有PDRID

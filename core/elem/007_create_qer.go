@@ -58,10 +58,10 @@ func DecodeCreateQER(buf *bytes.Buffer, len uint16) *CreateQER {
 func EncodeCreateQER(createQER CreateQER) *bytes.Buffer {
 	ret := SetValue(createQER.EType, createQER.ELength)
 	switch {
-	case HasGateStatus(createQER.GateStatus):	//M
+	case HasGateStatus(createQER.GateStatus): //M
 		SetValue(ret, createQER.GateStatus)
 		fallthrough
-	case HasQERID(createQER.QERID):	//M
+	case HasQERID(createQER.QERID): //M
 		SetValue(ret, createQER.QERID)
 		fallthrough
 	case HasMBR(createQER.MBR):

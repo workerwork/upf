@@ -5,9 +5,9 @@ import "bytes"
 type FSEIDFlag byte
 
 const (
-	FSEIDFlagIPv6  FSEIDFlag = 1 //bits:0000 0001
-	FSEIDFlagIPv4  FSEIDFlag = 2 //bits:0000 0010
-	FSEIDFlagIPv46 FSEIDFlag = 3 //bits:0000 0011
+	FSEIDFlagIPv6   FSEIDFlag = 1 //bits:0000 0001
+	FSEIDFlagIPv4   FSEIDFlag = 2 //bits:0000 0010
+	FSEIDFlagIPv4v6 FSEIDFlag = 3 //bits:0000 0011
 )
 
 type FSEID struct {
@@ -31,15 +31,24 @@ func DecodeFSEID(buf *bytes.Buffer, len uint16) *FSEID {
 		f.IPv4Addr = getValue(buf, 4)
 	case FSEIDFlagIPv6:
 		f.IPv6Addr = getValue(buf, 16)
-	case FSEIDFlagIPv46:
+	case FSEIDFlagIPv4v6:
 		f.IPv4Addr = getValue(buf, 4)
 		f.IPv6Addr = getValue(buf, 16)
 	}
 	return &f
 }
 
-func EncodeFSEID(f FSEID) []byte {
-	return setValue(f.EType, f.ELength, f.Flag, f.SEID, f.IPv4Addr, f.IPv6Addr)
+func EncodeFSEID(f FSEID) *bytes.Buffer {
+	ret := SetValue(f.EType, f.ELength, f.Flag, f.SEID)
+	switch f.Flag {
+	case FSEIDFlagIPv4:
+		SetValue(ret, f.IPv4Addr)
+	case FSEIDFlagIPv6:
+		SetValue(ret, f.IPv6Addr)
+	case FSEIDFlagIPv4v6:
+		SetValue(ret, f.IPv4Addr, f.IPv6Addr)
+	}
+	return ret
 }
 
 //判断是否含有FSEID
