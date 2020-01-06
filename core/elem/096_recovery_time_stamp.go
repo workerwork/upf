@@ -24,8 +24,8 @@ func DecodeRecoveryTimeStamp(buf *bytes.Buffer, len uint16) *RecoveryTimeStamp {
 	}
 }
 
-func EncodeRecoveryTimeStamp(r RecoveryTimeStamp) []byte {
-	return setValue(r.EType, r.ELength, r.RecoveryTimeStamp)
+func EncodeRecoveryTimeStamp(r RecoveryTimeStamp) *bytes.Buffer {
+	return SetValue(r.EType, r.ELength, r.RecoveryTimeStamp)
 }
 
 //判断是否含有RecoveryTimeStamp

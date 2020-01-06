@@ -21,8 +21,8 @@ func DecodeOuterHeaderRemoval(buf *bytes.Buffer, len uint16) *OuterHeaderRemoval
 	return &o
 }
 
-func EncodeOuterHeaderRemoval(o OuterHeaderRemoval) []byte {
-	return setValue(o.EType, o.ELength, o.OuterHeaderRemovalDescription, o.GTPUExtensionHeaderDeletion)
+func EncodeOuterHeaderRemoval(o OuterHeaderRemoval) *bytes.Buffer {
+	return SetValue(o.EType, o.ELength, o.OuterHeaderRemovalDescription, o.GTPUExtensionHeaderDeletion)
 }
 
 //判断是否含有OuterHeaderRemoval

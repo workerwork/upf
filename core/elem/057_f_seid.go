@@ -39,16 +39,18 @@ func DecodeFSEID(buf *bytes.Buffer, len uint16) *FSEID {
 }
 
 func EncodeFSEID(f FSEID) *bytes.Buffer {
-	ret := SetValue(f.EType, f.ELength, f.Flag, f.SEID)
-	switch f.Flag {
-	case FSEIDFlagIPv4:
-		SetValue(ret, f.IPv4Addr)
-	case FSEIDFlagIPv6:
-		SetValue(ret, f.IPv6Addr)
-	case FSEIDFlagIPv4v6:
-		SetValue(ret, f.IPv4Addr, f.IPv6Addr)
-	}
-	return ret
+	return SetValue(f.EType, f.ELength, f.Flag, f.SEID, f.IPv4Addr, f.IPv6Addr)
+	/*
+		ret := SetValue(f.EType, f.ELength, f.Flag, f.SEID)
+		switch f.Flag {
+		case FSEIDFlagIPv4:
+			SetValue(ret, f.IPv4Addr)
+		case FSEIDFlagIPv6:
+			SetValue(ret, f.IPv6Addr)
+		case FSEIDFlagIPv4v6:
+			SetValue(ret, f.IPv4Addr, f.IPv6Addr)
+		}
+		return ret*/
 }
 
 //判断是否含有FSEID

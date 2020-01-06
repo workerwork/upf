@@ -39,8 +39,8 @@ func DecodeOuterHeaderCreation(buf *bytes.Buffer, len uint16) *OuterHeaderCreati
 	return &o
 }
 
-func EncodeOuterHeaderCreation(o OuterHeaderCreation) []byte {
-	return setValue(o.EType, o.ELength, o.OuterHeaderCreationDescription, o.TEID, o.IPv4Addr, o.IPv6Addr, o.CTAG, o.STAG)
+func EncodeOuterHeaderCreation(o OuterHeaderCreation) *bytes.Buffer {
+	return SetValue(o.EType, o.ELength, o.OuterHeaderCreationDescription, o.TEID, o.IPv4Addr, o.IPv6Addr, o.CTAG, o.STAG)
 }
 
 //判断是否含有OuterHeaderCreation

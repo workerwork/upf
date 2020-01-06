@@ -16,8 +16,8 @@ func DecodeFARID(buf *bytes.Buffer, len uint16) *FARID {
 	}
 }
 
-func EncodeFARID(f FARID) []byte {
-	return setValue(f.EType, f.ELength, f.FARID)
+func EncodeFARID(f FARID) *bytes.Buffer {
+	return SetValue(f.EType, f.ELength, f.FARID)
 }
 
 //判断是否含有FARID
