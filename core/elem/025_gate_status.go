@@ -33,7 +33,7 @@ func DecodeGateStatus(buf *bytes.Buffer, len uint16) *GateStatus {
 	return &g
 }
 
-func EncodeGateStatus(g GateStatus) []byte {
+func EncodeGateStatus(g GateStatus) *bytes.Buffer {
 	var flag byte
 	if g.DLGate == GateStatusTypeCLOSED {
 		flag |= 0b00000001
@@ -41,7 +41,7 @@ func EncodeGateStatus(g GateStatus) []byte {
 	if g.ULGate == GateStatusTypeCLOSED {
 		flag |= 0b00000100
 	}
-	return setValue(g.EType, g.ELength, flag)
+	return SetValue(g.EType, g.ELength, flag)
 }
 
 //判断是否含有GateStatus

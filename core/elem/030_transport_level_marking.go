@@ -16,8 +16,8 @@ func DecodeTransportLevelMarking(buf *bytes.Buffer, len uint16) *TransportLevelM
 	}
 }
 
-func EncodeTransportLevelMarking(t TransportLevelMarking) []byte {
-	return setValue(t.EType, t.ELength, t.TosOrTrafficClass)
+func EncodeTransportLevelMarking(t TransportLevelMarking) *bytes.Buffer {
+	return SetValue(t.EType, t.ELength, t.TosOrTrafficClass)
 }
 
 //判断是否含有TransportLevelMarking
