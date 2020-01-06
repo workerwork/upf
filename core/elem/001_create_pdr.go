@@ -66,19 +66,33 @@ func DecodeCreatePDR(buf *bytes.Buffer, len uint16) *CreatePDR {
 	return &createPDR
 }
 
-func EncodeCreatePDR(createPDR CreatePDR) []byte {
-	ret := setValue(createPDR.EType, createPDR.ELength, createPDR.PDI, createPDR.Precedence, createPDR.PDRID) //PDI Precedence PDRID 为M信元
-	if HasOuterHeaderRemoval(createPDR.OuterHeaderRemoval) {
-		ret = setValue(ret, createPDR.OuterHeaderRemoval)
-	}
-	if HasFARID(createPDR.FARID) {
-		ret = setValue(ret, createPDR.FARID)
+func EncodeCreatePDR(createPDR CreatePDR) *bytes.Buffer {
+	ret := SetValue(createPDR.EType, createPDR.ELength)
+	switch {
+	case HasPDI(createPDR.PDI): //M
+		SetValue(ret, createPDR.PDI)
+		fallthrough
+	case HasPrecedence(createPDR.Precedence): //M
+		SetValue(ret, createPDR.Precedence)
+		fallthrough
+	case HasPDRID(createPDR.PDRID): //M
+		SetValue(ret, createPDR.PDRID)
+		fallthrough
+	case HasOuterHeaderRemoval(createPDR.OuterHeaderRemoval):
+		ret = SetValue(ret, createPDR.OuterHeaderRemoval)
+		fallthrough
+	case HasFARID(createPDR.FARID):
+		ret = SetValue(ret, createPDR.FARID)
 	}
 	for _, urrID := range createPDR.URRIDs {
-		ret = setValue(ret, urrID)
+		if HasURRID(urrID) {
+			ret = SetValue(ret, urrID)
+		}
 	}
 	for _, qerID := range createPDR.QERIDs {
-		ret = setValue(ret, qerID)
+		if HasQERID(qerID) {
+			ret = SetValue(ret, qerID)
+		}
 	}
 	return ret
 }

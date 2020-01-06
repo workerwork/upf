@@ -41,16 +41,12 @@ func DecodePDI(buf *bytes.Buffer, len uint16) *PDI {
 		switch eType {
 		case IETypeSourceInterface:
 			pdi.SourceInterface = *DecodeSourceInterface(eValue, eLen)
-			//log.Println("pdi.SourceInterface: ", pdi.SourceInterface)
 		case IETypeFTEID:
 			pdi.FTEID = *DecodeFTEID(eValue, eLen)
-			//log.Println("pdi.FTEID: ", pdi.FTEID)
 		case IETypeNetworkInstance:
 			pdi.NetworkInstance = *DecodeNetworkInstance(eValue, eLen)
-			//log.Println("pdi.NetworkInstance: ", pdi.NetworkInstance)
 		case IETypeQFI:
 			pdi.QFI = *DecodeQFI(eValue, eLen)
-			//log.Println("pdi.QFI: ", pdi.QFI)
 		case IETypeUEIPAddress:
 			pdi.UEIPAddress = *DecodeUEIPAddress(eValue, eLen)
 		default:
@@ -62,16 +58,20 @@ func DecodePDI(buf *bytes.Buffer, len uint16) *PDI {
 	return &pdi
 }
 
-func EncodePDI(pdi PDI) []byte {
-	ret := setValue(pdi.EType, pdi.ELength, pdi.SourceInterface) //SourceInterface 为M信元
-	if HasFTEID(pdi.FTEID) {
-		ret = setValue(ret, pdi.FTEID)
-	}
-	if HasNetworkInstance(pdi.NetworkInstance) {
-		ret = setValue(ret, pdi.NetworkInstance)
-	}
-	if HasQFI(pdi.QFI) {
-		ret = setValue(ret, pdi.QFI)
+func EncodePDI(pdi PDI) *bytes.Buffer {
+	ret := SetValue(pdi.EType, pdi.ELength)
+	switch {
+	case HasSourceInterface(pdi.SourceInterface): //M
+		SetValue(ret, pdi.SourceInterface)
+		fallthrough
+	case HasFTEID(pdi.FTEID):
+		SetValue(ret, pdi.FTEID)
+		fallthrough
+	case HasNetworkInstance(pdi.NetworkInstance):
+		SetValue(ret, pdi.NetworkInstance)
+		fallthrough
+	case HasQFI(pdi.QFI):
+		SetValue(ret, pdi.QFI)
 	}
 	return ret
 }
