@@ -31,20 +31,20 @@ func DecodeFTEID(buf *bytes.Buffer, len uint16) *FTEID {
 	f := FTEID{
 		EType:   IETypeFTEID,
 		ELength: len,
-		Flag:    FTEIDFlag(getValue(buf, 1)[0]),
+		Flag:    FTEIDFlag(GetValue(buf, 1)[0]),
 	}
 	if f.Flag&0b00000100>>2 == 1 { //CH=1
-		f.ChooseID = getValue(buf, 1)[0]
+		f.ChooseID = GetValue(buf, 1)[0]
 	} else {
-		f.TEID = getValue(buf, 4)
+		f.TEID = GetValue(buf, 4)
 		if f.Flag&0b00000001 == 1 { //V4=1
-			f.IPv4Addr = getValue(buf, 4)
+			f.IPv4Addr = GetValue(buf, 4)
 		}
 		if f.Flag&0b00000010>>1 == 1 { //V6=1
-			f.IPv6Addr = getValue(buf, 16)
+			f.IPv6Addr = GetValue(buf, 16)
 		}
 		if f.Flag&0b00001000>>3 == 1 { //CHID=1
-			f.ChooseID = getValue(buf, 1)[0]
+			f.ChooseID = GetValue(buf, 1)[0]
 		}
 	}
 	//log.Println("FTEID: ", f)

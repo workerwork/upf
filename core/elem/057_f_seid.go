@@ -23,17 +23,17 @@ func DecodeFSEID(buf *bytes.Buffer, len uint16) *FSEID {
 	f := FSEID{
 		EType:   IETypeFSEID,
 		ELength: len,
-		Flag:    FSEIDFlag(getValue(buf, 1)[0]),
-		SEID:    getValue(buf, 8),
+		Flag:    FSEIDFlag(GetValue(buf, 1)[0]),
+		SEID:    GetValue(buf, 8),
 	}
 	switch f.Flag {
 	case FSEIDFlagIPv4:
-		f.IPv4Addr = getValue(buf, 4)
+		f.IPv4Addr = GetValue(buf, 4)
 	case FSEIDFlagIPv6:
-		f.IPv6Addr = getValue(buf, 16)
+		f.IPv6Addr = GetValue(buf, 16)
 	case FSEIDFlagIPv4v6:
-		f.IPv4Addr = getValue(buf, 4)
-		f.IPv6Addr = getValue(buf, 16)
+		f.IPv4Addr = GetValue(buf, 4)
+		f.IPv6Addr = GetValue(buf, 16)
 	}
 	return &f
 }

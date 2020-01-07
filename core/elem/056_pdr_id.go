@@ -20,7 +20,7 @@ func DecodePDRID(buf *bytes.Buffer, len uint16) *PDRID {
 	return &PDRID{
 		EType:   IETypePDRID,
 		ELength: len,
-		RuleID:  getValue(buf, 2),
+		RuleID:  GetValue(buf, 2),
 	}
 }
 

@@ -20,7 +20,7 @@ func DecodeRecoveryTimeStamp(buf *bytes.Buffer, len uint16) *RecoveryTimeStamp {
 	return &RecoveryTimeStamp{
 		EType:             IETypeRecoveryTimeStamp,
 		ELength:           len,
-		RecoveryTimeStamp: getValue(buf, len),
+		RecoveryTimeStamp: GetValue(buf, len),
 	}
 }
 

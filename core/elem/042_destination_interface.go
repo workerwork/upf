@@ -12,7 +12,7 @@ func DecodeDestinationInterface(buf *bytes.Buffer, len uint16) *DestinationInter
 	return &DestinationInterface{
 		EType:     IETypeDestinationInterface,
 		ELength:   len,
-		Interface: InterfaceType(getValue(buf, len)[0]),
+		Interface: InterfaceType(GetValue(buf, len)[0]),
 	}
 }
 

@@ -23,7 +23,7 @@ func DecodeGateStatus(buf *bytes.Buffer, len uint16) *GateStatus {
 		DLGate:  GateStatusTypeCLOSED,
 		ULGate:  GateStatusTypeCLOSED,
 	}
-	flag := getValue(buf, 1)[0]
+	flag := GetValue(buf, 1)[0]
 	if flag&0b00000001 == 0 {
 		g.DLGate = GateStatusTypeOPEN
 	}

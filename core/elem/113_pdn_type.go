@@ -23,7 +23,7 @@ func DecodePDNType(buf *bytes.Buffer, len uint16) *PDNType {
 	return &PDNType{
 		EType:   IETypePDNType,
 		ELength: len,
-		PDNType: PDNTypeType(getValue(buf, 1)[0]),
+		PDNType: PDNTypeType(GetValue(buf, 1)[0]),
 	}
 }
 

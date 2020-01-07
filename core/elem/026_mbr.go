@@ -13,8 +13,8 @@ func DecodeMBR(buf *bytes.Buffer, len uint16) *MBR {
 	return &MBR{
 		EType:   IETypeMBR,
 		ELength: len,
-		ULMBR:   getValue(buf, 5),
-		DLMBR:   getValue(buf, 5),
+		ULMBR:   GetValue(buf, 5),
+		DLMBR:   GetValue(buf, 5),
 	}
 }
 

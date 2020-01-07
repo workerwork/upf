@@ -41,7 +41,7 @@ func DecodeCause(buf *bytes.Buffer, len uint16) *Cause {
 	return &Cause{
 		EType:   IETypeCause,
 		ELength: len,
-		Cause:   CauseType(getValue(buf, len-1)[0]),
+		Cause:   CauseType(GetValue(buf, len-1)[0]),
 	}
 }
 

@@ -12,7 +12,7 @@ func DecodeTransportLevelMarking(buf *bytes.Buffer, len uint16) *TransportLevelM
 	return &TransportLevelMarking{
 		EType:             IETypeTransportLevelMarking,
 		ELength:           len,
-		TosOrTrafficClass: getValue(buf, 2),
+		TosOrTrafficClass: GetValue(buf, 2),
 	}
 }
 

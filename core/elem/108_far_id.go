@@ -12,7 +12,7 @@ func DecodeFARID(buf *bytes.Buffer, len uint16) *FARID {
 	return &FARID{
 		EType:   IETypeFARID,
 		ELength: len,
-		FARID:   getValue(buf, 4),
+		FARID:   GetValue(buf, 4),
 	}
 }
 

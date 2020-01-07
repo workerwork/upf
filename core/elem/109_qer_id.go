@@ -12,7 +12,7 @@ func DecodeQERID(buf *bytes.Buffer, len uint16) *QERID {
 	return &QERID{
 		EType:   IETypeQERID,
 		ELength: len,
-		QERID:   getValue(buf, 4),
+		QERID:   GetValue(buf, 4),
 	}
 }
 

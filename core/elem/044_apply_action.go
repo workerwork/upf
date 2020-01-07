@@ -23,7 +23,7 @@ func DecodeApplyAction(buf *bytes.Buffer, len uint16) *ApplyAction {
 	return &ApplyAction{
 		EType:   IETypeApplyAction,
 		ELength: len,
-		Action:  ActionType(getValue(buf, 1)[0]),
+		Action:  ActionType(GetValue(buf, 1)[0]),
 	}
 }
 

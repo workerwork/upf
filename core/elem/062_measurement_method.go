@@ -15,7 +15,7 @@ func DecodeMeasurementMethod(buf *bytes.Buffer, len uint16) *MeasurementMethod {
 		EType:   IETypeMeasurementMethod,
 		ELength: len,
 	}
-	flag := getValue(buf, 1)[0]
+	flag := GetValue(buf, 1)[0]
 	switch {
 	case flag&0b00000001 == 1:
 		m.DURAT = true

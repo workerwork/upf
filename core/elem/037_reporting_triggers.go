@@ -28,7 +28,7 @@ func DecodeReportingTriggers(buf *bytes.Buffer, len uint16) *ReportingTriggers {
 		EType:   IETypeReportingTriggers,
 		ELength: len,
 	}
-	flag1 := getValue(buf, 1)[0]
+	flag1 := GetValue(buf, 1)[0]
 	switch {
 	case flag1&0b00000001 == 1:
 		r.PERIO = true
@@ -54,7 +54,7 @@ func DecodeReportingTriggers(buf *bytes.Buffer, len uint16) *ReportingTriggers {
 	case flag1&0b10000000>>7 == 1:
 		r.LIUSA = true
 	}
-	flag2 := getValue(buf, 1)[0]
+	flag2 := GetValue(buf, 1)[0]
 	switch {
 	case flag2&0b00000001 == 1:
 		r.VOLQU = true

@@ -12,7 +12,7 @@ func DecodeMeasurementPeriod(buf *bytes.Buffer, len uint16) *MeasurementPeriod {
 	return &MeasurementPeriod{
 		EType:             IETypeMeasurementPeriod,
 		ELength:           len,
-		MeasurementPeriod: getValue(buf, 4),
+		MeasurementPeriod: GetValue(buf, 4),
 	}
 }
 

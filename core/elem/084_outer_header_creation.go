@@ -18,23 +18,23 @@ func DecodeOuterHeaderCreation(buf *bytes.Buffer, len uint16) *OuterHeaderCreati
 	o := OuterHeaderCreation{
 		EType:                          IETypeOuterHeaderCreation,
 		ELength:                        len,
-		OuterHeaderCreationDescription: getValue(buf, 2),
+		OuterHeaderCreationDescription: GetValue(buf, 2),
 	}
 	flag := o.OuterHeaderCreationDescription[1]
 	if flag&0b00000001 == 1 || flag&0b00000010>>1 == 1 {
-		o.TEID = getValue(buf, 4)
+		o.TEID = GetValue(buf, 4)
 	}
 	if flag&0b00000001 == 1 || flag&0b00000100>>2 == 1 || flag&0b00010000>>4 == 1 {
-		o.IPv4Addr = getValue(buf, 4)
+		o.IPv4Addr = GetValue(buf, 4)
 	}
 	if flag&0b00000010>>1 == 1 || flag&0b00001000>>3 == 1 || flag&0b00100000>>5 == 1 {
-		o.IPv6Addr = getValue(buf, 16)
+		o.IPv6Addr = GetValue(buf, 16)
 	}
 	if flag&0b01000000>>6 == 1 {
-		o.CTAG = getValue(buf, 3)
+		o.CTAG = GetValue(buf, 3)
 	}
 	if flag&0b10000000>>7 == 1 {
-		o.STAG = getValue(buf, 3)
+		o.STAG = GetValue(buf, 3)
 	}
 	return &o
 }

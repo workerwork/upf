@@ -30,8 +30,8 @@ func DecodeNodeID(buf *bytes.Buffer, len uint16) *NodeID {
 	return &NodeID{
 		EType:      IETypeNodeID,
 		ELength:    len,
-		NodeIDType: NodeIDType(getValue(buf, 1)[0]),
-		NodeID:     getValue(buf, len-1),
+		NodeIDType: NodeIDType(GetValue(buf, 1)[0]),
+		NodeID:     GetValue(buf, len-1),
 	}
 }
 

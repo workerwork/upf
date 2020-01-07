@@ -12,7 +12,7 @@ func DecodeQFI(buf *bytes.Buffer, len uint16) *QFI {
 	return &QFI{
 		EType:   IETypeQFI,
 		ELength: len,
-		QFI:     getValue(buf, len)[0],
+		QFI:     GetValue(buf, len)[0],
 	}
 }
 

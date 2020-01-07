@@ -21,7 +21,7 @@ func DecodeSourceInterface(buf *bytes.Buffer, len uint16) *SourceInterface {
 	return &SourceInterface{
 		EType:     IETypeSourceInterface,
 		ELength:   len,
-		Interface: InterfaceType(getValue(buf, len)[0]),
+		Interface: InterfaceType(GetValue(buf, len)[0]),
 	}
 }
 

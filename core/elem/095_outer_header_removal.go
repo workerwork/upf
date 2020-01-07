@@ -13,10 +13,10 @@ func DecodeOuterHeaderRemoval(buf *bytes.Buffer, len uint16) *OuterHeaderRemoval
 	o := OuterHeaderRemoval{
 		EType:                         IETypeOuterHeaderRemoval,
 		ELength:                       len,
-		OuterHeaderRemovalDescription: getValue(buf, 1)[0],
+		OuterHeaderRemovalDescription: GetValue(buf, 1)[0],
 	}
 	if len > 1 {
-		o.GTPUExtensionHeaderDeletion = getValue(buf, 1)[0]
+		o.GTPUExtensionHeaderDeletion = GetValue(buf, 1)[0]
 	}
 	return &o
 }

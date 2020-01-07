@@ -12,7 +12,7 @@ func DecodeURRID(buf *bytes.Buffer, len uint16) *URRID {
 	return &URRID{
 		EType:   IETypeURRID,
 		ELength: len,
-		URRID:   getValue(buf, 4),
+		URRID:   GetValue(buf, 4),
 	}
 }
 

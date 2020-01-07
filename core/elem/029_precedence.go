@@ -20,7 +20,7 @@ func DecodePrecedence(buf *bytes.Buffer, len uint16) *Precedence {
 	return &Precedence{
 		EType:      IETypePrecedence,
 		ELength:    len,
-		Precedence: getValue(buf, len),
+		Precedence: GetValue(buf, len),
 	}
 }
 
