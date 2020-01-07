@@ -20,15 +20,15 @@ type Head struct {
 
 type Msg struct {
 	Head
-	Cause             Cause
-	NodeID            NodeID
-	RecoveryTimeStamp RecoveryTimeStamp
-	FSEID             FSEID
-	PDNType           PDNType
-	CreatePDR         CreatePDR
-	CreateFAR         CreateFAR
-	CreateURR         CreateURR
-	CreateQER         CreateQER
+	Cause             //Cause
+	NodeID            //NodeID
+	RecoveryTimeStamp //RecoveryTimeStamp
+	FSEID             //FSEID
+	PDNType           //PDNType
+	CreatePDR         //CreatePDR
+	CreateFAR         //CreateFAR
+	CreateURR         //CreateURR
+	CreateQER         //CreateQER
 }
 
 //解析函数
@@ -53,7 +53,7 @@ func Parse(buf *bytes.Buffer) *Msg {
 		log.Println(err) //TODO::
 	}
 	if m.S {
-		if err := binary.Read(buf, binary.LittleEndian, &m.SEID); err != nil {
+		if err := binary.Read(buf, binary.LittleEndian, &m.Head.SEID); err != nil {
 			log.Println(err) //TODO::
 		}
 	}
@@ -147,7 +147,7 @@ func (m *Msg) Pack() *bytes.Buffer {
 		log.Println(err) //TODO::
 	}
 	if m.S {
-		if err := binary.Write(buf, binary.BigEndian, m.SEID); err != nil {
+		if err := binary.Write(buf, binary.BigEndian, m.Head.SEID); err != nil {
 			log.Println(err) //TODO::
 		}
 	}
