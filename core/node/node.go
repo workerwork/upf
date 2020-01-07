@@ -64,11 +64,71 @@ func (node *Node) HandlePFCPMsgTypeAssociationSetupRequest(reqMsg *Msg) *Msg {
 }
 
 func (node *Node) HandlePFCPMsgTypeAssociationUpdateRequest(reqMsg *Msg) *Msg {
-	return &Msg{}
+	respMsg := Msg{
+		Head: Head{
+			Version:  1,
+			MP:       false,
+			S:        false,
+			Type:     PFCPMsgTypeAssociationUpdateResponse,
+			SEID:     0,
+			Sequence: reqMsg.Sequence,
+			Priority: reqMsg.Priority,
+		},
+		NodeID:            *NewIPv4NodeID([]byte{1, 1, 1, 1}),        //从配置读取	//TODO::
+		Cause:             *NewCause(CauseSuccess),
+	}
+	respMsg.Length = respMsg.NodeID.ELength + 4 + respMsg.Cause.ELength + 4 + 4
+	if !HasNodeID(reqMsg.NodeID) {
+		log.Println("false") //TODO::
+		respMsg.Cause = Cause{Cause: CauseMandatoryIEMissing}
+	}
+	if isExist, _ := node.NodeDB.IsExist(reqMsg.NodeID); !isExist {
+		log.Println("Node is not exist!") //TODO::
+		respMsg.Cause = Cause{Cause: CauseUnspecifiedReason}
+	} else {
+		//更新node节点
+		node.Elements = Elements{
+			LocalNodeID:             respMsg.NodeID,
+			RemoteNodeID:            reqMsg.NodeID,
+			LocalRecoveryTimeStamp:  respMsg.RecoveryTimeStamp,
+			RemoteRecoveryTimeStamp: reqMsg.RecoveryTimeStamp,
+		}
+		if err := node.NodeDB.Insert(node.Elements); err != nil {
+			//TODO::
+		}
+	}
+	return &respMsg
 }
 
 func (node *Node) HandlePFCPMsgTypeAssociationReleaseRequest(reqMsg *Msg) *Msg {
-	return &Msg{}
+	respMsg := Msg{
+		Head: Head{
+			Version:  1,
+			MP:       false,
+			S:        false,
+			Type:     PFCPMsgTypeAssociationReleaseResponse,
+			SEID:     0,
+			Sequence: reqMsg.Sequence,
+			Priority: reqMsg.Priority,
+		},
+		NodeID:            *NewIPv4NodeID([]byte{1, 1, 1, 1}),        //从配置读取	//TODO::
+		Cause:             *NewCause(CauseSuccess),
+	}
+	respMsg.Length = respMsg.NodeID.ELength + 4 + respMsg.Cause.ELength + 4 + 4
+	if !HasNodeID(reqMsg.NodeID) {
+		log.Println("false") //TODO::
+		respMsg.Cause = Cause{Cause: CauseMandatoryIEMissing}
+	}
+	if isExist, _ := node.NodeDB.IsExist(reqMsg.NodeID); !isExist {
+		log.Println("Node is not exist!") //TODO::
+		respMsg.Cause = Cause{Cause: CauseUnspecifiedReason}
+	} else {
+		//删除node节点
+		if err := node.NodeDB.Remove(reqMsg.NodeID); err != nil {
+			//TODO::
+		}
+	}
+	return &respMsg
 }
 
 func (node *Node) HandlePFCPMsgTypeNodeReportResponse(reqMsg *Msg) *Msg {
