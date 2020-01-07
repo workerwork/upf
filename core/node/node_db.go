@@ -1,25 +1,25 @@
 package node
 
 import (
-	"github.com/workerwork/upf/core/elem"
+	. "github.com/workerwork/upf/core/elem"
 )
 
 type NodeDB interface {
 	Insert(Elements) error
-	Remove(elem.NodeID) error
-	IsExist(elem.NodeID) (bool, error)
-	GetLocalNode(elem.NodeID) (elem.NodeID, error)
-	GetRemoteNode(elem.NodeID) (elem.NodeID, error)
-	GetLocalRecoveryTimeStamp(elem.NodeID) (elem.RecoveryTimeStamp, error)
-	GetRemoteRecoveryTimeStamp(elem.NodeID) (elem.RecoveryTimeStamp, error)
+	Remove(NodeID) error
+	IsExist(NodeID) (bool, error)
+	GetLocalNode(NodeID) (NodeID, error)
+	GetRemoteNode(NodeID) (NodeID, error)
+	GetLocalRecoveryTimeStamp(NodeID) (RecoveryTimeStamp, error)
+	GetRemoteRecoveryTimeStamp(NodeID) (RecoveryTimeStamp, error)
 }
 
 type SessionDB interface {
 	Insert(Elements) error
-	Remove(elem.NodeID) error
-	IsExist(elem.NodeID) (bool, error)
-	GetLocalNode(elem.NodeID) (elem.NodeID, error)
-	GetRemoteNode(elem.NodeID) (elem.NodeID, error)
-	GetLocalRecoveryTimeStamp(elem.NodeID) (elem.RecoveryTimeStamp, error)
-	GetRemoteRecoveryTimeStamp(elem.NodeID) (elem.RecoveryTimeStamp, error)
+	Remove(NodeID) error
+	IsExist(NodeID) (bool, error)
+	GetLocalNode(NodeID) (NodeID, error)
+	GetRemoteNode(NodeID) (NodeID, error)
+	GetLocalRecoveryTimeStamp(NodeID) (RecoveryTimeStamp, error)
+	GetRemoteRecoveryTimeStamp(NodeID) (RecoveryTimeStamp, error)
 }

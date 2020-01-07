@@ -1,8 +1,8 @@
 package node
 
 import (
-	"github.com/workerwork/upf/core/elem"
-	"github.com/workerwork/upf/core/msg"
+	. "github.com/workerwork/upf/core/elem"
+	. "github.com/workerwork/upf/core/msg"
 	"log"
 )
 
@@ -12,10 +12,10 @@ type Node struct {
 }
 
 type Elements struct {
-	LocalNodeID             elem.NodeID
-	RemoteNodeID            elem.NodeID
-	LocalRecoveryTimeStamp  elem.RecoveryTimeStamp
-	RemoteRecoveryTimeStamp elem.RecoveryTimeStamp
+	LocalNodeID             NodeID
+	RemoteNodeID            NodeID
+	LocalRecoveryTimeStamp  RecoveryTimeStamp
+	RemoteRecoveryTimeStamp RecoveryTimeStamp
 }
 
 func NewCacheNode() *Node {
@@ -24,30 +24,30 @@ func NewCacheNode() *Node {
 	}
 }
 
-func (node *Node) HandlePFCPMsgTypeAssociationSetupRequest(reqMsg *msg.Msg) *msg.Msg {
-	respMsg := msg.Msg{
-		Head: msg.Head{
+func (node *Node) HandlePFCPMsgTypeAssociationSetupRequest(reqMsg *Msg) *Msg {
+	respMsg := Msg{
+		Head: Head{
 			Version:  1,
 			MP:       false,
 			S:        false,
-			Type:     msg.PFCPMsgTypeAssociationSetupResponse,
+			Type:     PFCPMsgTypeAssociationSetupResponse,
 			SEID:     0,
 			Sequence: reqMsg.Sequence,
 			Priority: reqMsg.Priority,
 		},
-		NodeID:            *elem.NewIPv4NodeID([]byte{1, 1, 1, 1}),        //从配置读取	//TODO::
-		RecoveryTimeStamp: *elem.NewRecoveryTimeStamp([]byte{2, 2, 2, 2}), //从配置读取	//TODO::
-		Cause:             *elem.NewCause(elem.CauseSuccess),
+		NodeID:            *NewIPv4NodeID([]byte{1, 1, 1, 1}),        //从配置读取	//TODO::
+		RecoveryTimeStamp: *NewRecoveryTimeStamp([]byte{2, 2, 2, 2}), //从配置读取	//TODO::
+		Cause:             *NewCause(CauseSuccess),
 	}
 	//信元类型２字节＋信元长度表示２字节＋消息头sequence3字节+space1字节
 	respMsg.Length = respMsg.NodeID.ELength + 4 + respMsg.RecoveryTimeStamp.ELength + 4 + respMsg.Cause.ELength + 4 + 4
-	if !elem.HasNodeID(reqMsg.NodeID) || !elem.HasRecoveryTimeStamp(reqMsg.RecoveryTimeStamp) {
+	if !HasNodeID(reqMsg.NodeID) || !HasRecoveryTimeStamp(reqMsg.RecoveryTimeStamp) {
 		log.Println("false") //TODO::
-		respMsg.Cause = elem.Cause{Cause: elem.CauseMandatoryIEMissing}
+		respMsg.Cause = Cause{Cause: CauseMandatoryIEMissing}
 	}
 	if isExist, _ := node.NodeDB.IsExist(reqMsg.NodeID); isExist {
 		log.Println("Node is exist!") //TODO::
-		respMsg.Cause = elem.Cause{Cause: elem.CauseUnspecifiedReason}
+		respMsg.Cause = Cause{Cause: CauseUnspecifiedReason}
 	} else {
 		//添加node节点
 		node.Elements = Elements{
@@ -63,14 +63,14 @@ func (node *Node) HandlePFCPMsgTypeAssociationSetupRequest(reqMsg *msg.Msg) *msg
 	return &respMsg
 }
 
-func (node *Node) HandlePFCPMsgTypeAssociationUpdateRequest(reqMsg *msg.Msg) *msg.Msg {
-	return &msg.Msg{}
+func (node *Node) HandlePFCPMsgTypeAssociationUpdateRequest(reqMsg *Msg) *Msg {
+	return &Msg{}
 }
 
-func (node *Node) HandlePFCPMsgTypeAssociationReleaseRequest(reqMsg *msg.Msg) *msg.Msg {
-	return &msg.Msg{}
+func (node *Node) HandlePFCPMsgTypeAssociationReleaseRequest(reqMsg *Msg) *Msg {
+	return &Msg{}
 }
 
-func (node *Node) HandlePFCPMsgTypeNodeReportResponse(reqMsg *msg.Msg) *msg.Msg {
-	return &msg.Msg{}
+func (node *Node) HandlePFCPMsgTypeNodeReportResponse(reqMsg *Msg) *Msg {
+	return &Msg{}
 }
