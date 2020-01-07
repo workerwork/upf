@@ -8,11 +8,11 @@ import (
 )
 
 type Head struct {
-	Version  byte //100
+	Version  byte
 	MP       bool
 	S        bool
 	Type     PFCPMsgType
-	Length   uint16 //indicate the length of the message in octets excluding the mantory 4 octets
+	Length   uint16
 	SEID     uint64
 	Sequence uint32 //3byte
 	Priority byte
