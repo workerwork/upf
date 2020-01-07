@@ -1,17 +1,17 @@
 package session
 
 import (
-	"github.com/workerwork/upf/core/elem"
+	. "github.com/workerwork/upf/core/elem"
 )
 
 type Session struct {
+	ID string
 	SessionDB //node节点数据库接口
-	Elements
+	PDR CreatePDR
+	FAR CreateFAR
+	URR CreateURR
+	QER CreateQER
+	Precedence
+
 }
 
-type Elements struct {
-	LocalNodeID             elem.NodeID
-	RemoteNodeID            elem.NodeID
-	LocalRecoveryTimeStamp  elem.RecoveryTimeStamp
-	RemoteRecoveryTimeStamp elem.RecoveryTimeStamp
-}

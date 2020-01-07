@@ -15,8 +15,17 @@ func Run(buf *bytes.Buffer) {
 	case PFCPMsgTypeAssociationSetupRequest:
 		log.Println(cn.HandlePFCPMsgTypeAssociationSetupRequest(m).Pack().Bytes())
 	case PFCPMsgTypeAssociationUpdateRequest:
+		log.Println(cn.HandlePFCPMsgTypeAssociationUpdateRequest(m).Pack().Bytes())
 	case PFCPMsgTypeAssociationReleaseRequest:
+		log.Println(cn.HandlePFCPMsgTypeAssociationReleaseRequest(m).Pack().Bytes())
 	case PFCPMsgTypeNodeReportResponse:
+		//TODO::
+	case PFCPMsgTypeSessionEstablishmentRequest:
+
+	case PFCPMsgTypeSessionModificationRequest:
+
+	case PFCPMsgTypeSessionDeletionRequest:
+
 	default:
 		//TODO::
 	}
