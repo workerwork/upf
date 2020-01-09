@@ -74,8 +74,8 @@ func (node *Node) HandlePFCPMsgTypeAssociationUpdateRequest(reqMsg *Msg) *Msg {
 			Sequence: reqMsg.Sequence,
 			Priority: reqMsg.Priority,
 		},
-		NodeID:            *NewIPv4NodeID([]byte{1, 1, 1, 1}),        //从配置读取	//TODO::
-		Cause:             *NewCause(CauseSuccess),
+		NodeID: *NewIPv4NodeID([]byte{1, 1, 1, 1}), //从配置读取	//TODO::
+		Cause:  *NewCause(CauseSuccess),
 	}
 	respMsg.Length = respMsg.NodeID.ELength + 4 + respMsg.Cause.ELength + 4 + 4
 	if !HasNodeID(reqMsg.NodeID) {
@@ -111,8 +111,8 @@ func (node *Node) HandlePFCPMsgTypeAssociationReleaseRequest(reqMsg *Msg) *Msg {
 			Sequence: reqMsg.Sequence,
 			Priority: reqMsg.Priority,
 		},
-		NodeID:            *NewIPv4NodeID([]byte{1, 1, 1, 1}),        //从配置读取	//TODO::
-		Cause:             *NewCause(CauseSuccess),
+		NodeID: *NewIPv4NodeID([]byte{1, 1, 1, 1}), //从配置读取	//TODO::
+		Cause:  *NewCause(CauseSuccess),
 	}
 	respMsg.Length = respMsg.NodeID.ELength + 4 + respMsg.Cause.ELength + 4 + 4
 	if !HasNodeID(reqMsg.NodeID) {

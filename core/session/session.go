@@ -5,13 +5,11 @@ import (
 )
 
 type Session struct {
-	ID string
+	ID        string
 	SessionDB //node节点数据库接口
-	PDR CreatePDR
-	FAR CreateFAR
-	URR CreateURR
-	QER CreateQER
+	PDR       CreatePDR
+	FAR       CreateFAR
+	URR       CreateURR
+	QER       CreateQER
 	Precedence
-
 }
-
