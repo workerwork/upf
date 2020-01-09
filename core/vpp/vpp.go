@@ -20,7 +20,7 @@ var (
 	sockAddr = flag.String("sock", socketclient.DefaultSocketName, "Path to VPP binary API socket file")
 )
 
-func main() {
+func Run() {
 	flag.Parse()
 	// connect to VPP asynchronously
 	conn, conev, err := govpp.AsyncConnect(*sockAddr, core.DefaultMaxReconnectAttempts, core.DefaultReconnectInterval)
