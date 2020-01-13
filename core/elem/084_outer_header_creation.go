@@ -21,26 +21,30 @@ func DecodeOuterHeaderCreation(buf *bytes.Buffer, len uint16) *OuterHeaderCreati
 		OuterHeaderCreationDescription: GetValue(buf, 2),
 	}
 	flag := o.OuterHeaderCreationDescription[1]
-	if flag&0b00000001 == 1 || flag&0b00000010>>1 == 1 {
+	switch {
+	case flag&0b00000011 != 0:
 		o.TEID = GetValue(buf, 4)
-	}
-	if flag&0b00000001 == 1 || flag&0b00000100>>2 == 1 || flag&0b00010000>>4 == 1 {
+		fallthrough
+	case flag&0b00010101 != 0:
 		o.IPv4Addr = GetValue(buf, 4)
-	}
-	if flag&0b00000010>>1 == 1 || flag&0b00001000>>3 == 1 || flag&0b00100000>>5 == 1 {
+		fallthrough
+	case flag&0b00101010 != 0:
 		o.IPv6Addr = GetValue(buf, 16)
-	}
-	if flag&0b01000000>>6 == 1 {
+		fallthrough
+	case flag&0b00001111 != 0:
+		o.PortNumber = GetValue(buf, 1)
+		fallthrough
+	case flag&0b01000000 != 0:
 		o.CTAG = GetValue(buf, 3)
-	}
-	if flag&0b10000000>>7 == 1 {
+		fallthrough
+	case flag&0b10000000 != 0:
 		o.STAG = GetValue(buf, 3)
 	}
 	return &o
 }
 
 func EncodeOuterHeaderCreation(o OuterHeaderCreation) []byte {
-	return SetValue(o.EType, o.ELength, o.OuterHeaderCreationDescription, o.TEID, o.IPv4Addr, o.IPv6Addr, o.CTAG, o.STAG)
+	return SetValue(o.EType, o.ELength, o.OuterHeaderCreationDescription, o.TEID, o.IPv4Addr, o.IPv6Addr, o.PortNumber, o.CTAG, o.STAG)
 }
 
 //判断是否含有OuterHeaderCreation
