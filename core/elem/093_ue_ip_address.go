@@ -1,6 +1,8 @@
 package elem
 
-import "bytes"
+import (
+	"bytes"
+)
 
 type UEIPAddressFlag byte
 
@@ -19,19 +21,19 @@ func DecodeUEIPAddress(buf *bytes.Buffer, len uint16) *UEIPAddress {
 		ELength: len,
 		Flag:    UEIPAddressFlag(GetValue(buf, 1)[0]),
 	}
-	if u.Flag&0b00010000>>4 == 1 { //CH=1
+	if u.Flag&0b00010000 != 0 { //CH=1
 		//TODO::
 	} else {
-		if u.Flag&0b00000001 == 1 { //v6=1
-			u.IPv6Addr = GetValue(buf, 16)
-		}
-		if u.Flag&0b00000010>>1 == 1 { //v4=1
+		switch {
+		case u.Flag&0b00000010 != 0: //v4=1
 			u.IPv4Addr = GetValue(buf, 4)
-		}
-		if u.Flag&0b00000100>>2 == 1 { //v4=1
-			//TODO::
-		}
-		if u.Flag&0b00001000>>3 == 1 { //v4=1
+			fallthrough
+		case u.Flag&0b00000001 != 0: //v6=1
+			u.IPv6Addr = GetValue(buf, 16)
+			fallthrough
+		case u.Flag&0b00000100 != 0: //S/D=1
+			fallthrough
+		case u.Flag&0b00001000 != 0: //ipv6D=1
 			u.IPv6Prefix = GetValue(buf, 1)[0]
 		}
 	}
