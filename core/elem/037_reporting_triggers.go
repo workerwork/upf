@@ -30,48 +30,48 @@ func DecodeReportingTriggers(buf *bytes.Buffer, len uint16) *ReportingTriggers {
 	}
 	flag1 := GetValue(buf, 1)[0]
 	switch {
-	case flag1&0b00000001 == 1:
+	case flag1&0b00000001 != 0:
 		r.PERIO = true
 		fallthrough
-	case flag1&0b00000010>>1 == 1:
+	case flag1&0b00000010 != 0:
 		r.VOLTH = true
 		fallthrough
-	case flag1&0b00000100>>2 == 1:
+	case flag1&0b00000100 != 0:
 		r.TIMTH = true
 		fallthrough
-	case flag1&0b00001000>>3 == 1:
+	case flag1&0b00001000 != 0:
 		r.QUHTI = true
 		fallthrough
-	case flag1&0b00010000>>4 == 1:
+	case flag1&0b00010000 != 0:
 		r.START = true
 		fallthrough
-	case flag1&0b00100000>>5 == 1:
+	case flag1&0b00100000 != 0:
 		r.STOPT = true
 		fallthrough
-	case flag1&0b01000000>>6 == 1:
+	case flag1&0b01000000 != 0:
 		r.DROTH = true
 		fallthrough
-	case flag1&0b10000000>>7 == 1:
+	case flag1&0b10000000 != 0:
 		r.LIUSA = true
 	}
 	flag2 := GetValue(buf, 1)[0]
 	switch {
-	case flag2&0b00000001 == 1:
+	case flag2&0b00000001 != 0:
 		r.VOLQU = true
 		fallthrough
-	case flag2&0b00000010>>1 == 1:
+	case flag2&0b00000010 != 0:
 		r.TIMQU = true
 		fallthrough
-	case flag2&0b00000100>>2 == 1:
+	case flag2&0b00000100 != 0:
 		r.ENVCL = true
 		fallthrough
-	case flag2&0b00001000>>3 == 1:
+	case flag2&0b00001000 != 0:
 		r.MACAR = true
 		fallthrough
-	case flag2&0b00010000>>4 == 1:
+	case flag2&0b00010000 != 0:
 		r.EVETH = true
 		fallthrough
-	case flag2&0b00100000>>5 == 1:
+	case flag2&0b00100000 != 0:
 		r.EVEQU = true
 	}
 	return &r
