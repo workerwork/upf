@@ -17,13 +17,13 @@ func DecodeMeasurementMethod(buf *bytes.Buffer, len uint16) *MeasurementMethod {
 	}
 	flag := GetValue(buf, 1)[0]
 	switch {
-	case flag&0b00000001 == 1:
+	case flag&0b00000001 != 0:
 		m.DURAT = true
 		fallthrough
-	case flag&0b00000010>>1 == 1:
+	case flag&0b00000010 != 0:
 		m.VOLUM = true
 		fallthrough
-	case flag&0b00000100>>2 == 1:
+	case flag&0b00000100 != 0:
 		m.EVENT = true
 	}
 	return &m
