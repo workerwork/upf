@@ -98,7 +98,7 @@ const (
 	IETypeDeactivatePredefinedRules                       IEType = 107
 	IETypeFARID                                           IEType = 108
 	IETypeQERID                                           IEType = 109
-	IETypeOCIFlags                                        IEType = 100
+	IETypeOCIFlags                                        IEType = 110
 	IETypePFCPAssociationReleaseRequest                   IEType = 111
 	IETypeGracefulReleasePeriod                           IEType = 112
 	IETypePDNType                                         IEType = 113
